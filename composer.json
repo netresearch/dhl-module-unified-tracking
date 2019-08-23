@@ -1,0 +1,23 @@
+{
+  "name": "dhl/module-group-tracking",
+  "description": "",
+  "type": "magento2-module",
+  "license": "OSL-3.0",
+  "authors": [
+    {
+      "email": "muhammad.qasim@netresearch.de",
+      "name": "Muhammad Qasim"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Dhl\\GroupTracking\\": ""
+    },
+    "files": [
+      "registration.php"
+    ]
+  },
+  "require": {
+    "php": "~7.0.6||~7.1.3||~7.2.0"
+  }
+}
