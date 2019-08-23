@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
+    <default>
+        <dhlshippingsolutions>
+            <tracking>
+                <consumer_key>pJDOxtJt03guK5eXKYcZt9Ez1bPi2Xvm</consumer_key>
+            </tracking>
+        </dhlshippingsolutions>
+    </default>
+</config>
