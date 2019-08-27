@@ -6,7 +6,6 @@ declare(strict_types=1);
 
 namespace Dhl\GroupTracking\Model\Config;
 
-use http\Exception\UnexpectedValueException;
 use Magento\TestFramework\ObjectManager;
 
 /**

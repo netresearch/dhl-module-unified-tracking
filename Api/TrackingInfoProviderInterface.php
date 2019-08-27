@@ -16,8 +16,10 @@ namespace Dhl\GroupTracking\Api;
 interface TrackingInfoProviderInterface
 {
     /**
-     * @param int $storeId
+     * @param string $trackingId
+     * @param string $carrierCode
+     * @param string $serviceName
      * @return string
      */
-    public function getTrackingDetails(string $trackingId, string $serviceName): string;
+    public function getTrackingDetails(string $trackingId, string $carrierCode, string $serviceName): string;
 }
