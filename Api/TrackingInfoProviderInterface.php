@@ -21,5 +21,5 @@ interface TrackingInfoProviderInterface
      * @param string $serviceName
      * @return string
      */
-    public function getTrackingDetails(string $trackingId, string $carrierCode, string $serviceName): string;
+    public function getTrackingDetails(string $trackingId, string $carrierCode, string $serviceName): array;
 }
