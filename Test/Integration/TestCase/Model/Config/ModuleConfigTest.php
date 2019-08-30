@@ -10,11 +10,13 @@ use Magento\TestFramework\ObjectManager;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class ModuleConfigTests
+ * Class ModuleConfigTest
  *
  * @package Dhl\GroupTracking\Test\Integration
  * @author Muhammad Qasim <muhammad.qasim@netresearch.de>
  * @link   https://www.netresearch.de/
+ *
+ * @magentoAppArea adminhtml
  */
 class ModuleConfigTest extends TestCase
 {
@@ -22,34 +24,44 @@ class ModuleConfigTest extends TestCase
      * @var ObjectManager
      */
     protected $objectManager;
+
     /**
-     * @var mixed
+     * @var ModuleConfig
      */
     private $config;
 
+    /**
+     * Init object manager and test subject
+     */
     protected function setUp()
     {
         parent::setUp();
+
         $this->objectManager = ObjectManager::getInstance();
-        /** @var ModuleConfig $config */
         $this->config = $this->objectManager->create(ModuleConfig::class);
     }
+
     /**
      * @test
      * @magentoConfigFixture default/dhlshippingsolutions/tracking/consumer_key foo
      */
-    public function testGetConsumerKey()
+    public function getConsumerKey()
     {
-         $result = $this->config->getConsumerKey();
-        self::assertSame('foo', $result);
+        $consumerKey = $this->config->getConsumerKey();
+        self::assertSame('foo', $consumerKey);
     }
+
     /**
      * @test
-     * @magentoConfigFixture current_store shipping/origin/country_id DE
+     * @magentoConfigFixture current_store shipping/origin/country_id US
+     * @magentoConfigFixture default_store shipping/origin/country_id DE
      */
-    public function testGetShippingOriginCountry()
+    public function getShippingOriginCountry()
     {
-        $countryCode = $this->config->getShippingOriginCountry();
+        $countryCode = $this->config->getShippingOriginCountry('admin');
+        self::assertSame('US', $countryCode);
+
+        $countryCode = $this->config->getShippingOriginCountry('default');
         self::assertSame('DE', $countryCode);
     }
 }

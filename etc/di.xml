@@ -4,10 +4,7 @@
  * See LICENSE.md for license details.
  */
 -->
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     <!-- # interface preferences -->
-    <preference
-            for="Dhl\GroupTracking\Api\TrackingInfoProviderInterface"
-            type="Dhl\GroupTracking\Model\TrackingInfo"/>
+    <preference for="Dhl\GroupTracking\Api\TrackingInfoProviderInterface" type="Dhl\GroupTracking\Model\TrackingInfoProvider"/>
 </config>

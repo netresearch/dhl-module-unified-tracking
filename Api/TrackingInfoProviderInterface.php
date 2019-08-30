@@ -9,17 +9,21 @@ namespace Dhl\GroupTracking\Api;
 /**
  * Interface TrackingInfoProviderInterface
  *
- * @package Dhl\GroupTracking\API
+ * Entry point for retrieving tracking data from the DHL web service.
+ *
+ * @package Dhl\GroupTracking\Api
  * @author  Muhammad Qasim <muhammad.qasim@netresearch.de>
  * @link    https://www.netresearch.de/
  */
 interface TrackingInfoProviderInterface
 {
     /**
+     * Obtain carrier tracking details for given tracking number.
+     *
      * @param string $trackingId
      * @param string $carrierCode
      * @param string $serviceName
-     * @return string
+     * @return string[]
      */
     public function getTrackingDetails(string $trackingId, string $carrierCode, string $serviceName): array;
 }
