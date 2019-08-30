@@ -104,6 +104,7 @@ class TrackingInfoTest extends TestCase
             'flatrate_flatrate'
         );
         $shipment->save();
+        $track = $trackFactory->create();
         $track->setCarrierCode('flatrate_flatrate')->setTrackNumber('1234567')->setParentId($shipment->getId());
         $shipment->addTrack($track);
         $shipment->getTracksCollection()->save();
