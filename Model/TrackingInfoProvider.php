@@ -6,16 +6,14 @@ declare(strict_types=1);
 
 namespace Dhl\GroupTracking\Model;
 
+use Dhl\GroupTracking\Api\Data\TrackingStatusInterface;
+use Dhl\GroupTracking\Api\Data\TrackingStatusInterfaceFactory;
 use Dhl\GroupTracking\Api\TrackingInfoProviderInterface;
+use Dhl\GroupTracking\Exception\TrackingException;
 use Dhl\GroupTracking\Model\Config\ModuleConfig;
-use Magento\Framework\Api\SearchCriteriaBuilder;
-use Magento\Framework\Exception\LocalizedException;
+use Dhl\ShippingCore\Api\Pipeline\RequestTracksPipelineInterface;
+use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Locale\ResolverInterface;
-use Magento\Sales\Api\Data\ShipmentTrackInterface;
-use Magento\Sales\Api\ShipmentRepositoryInterface;
-use Magento\Sales\Api\ShipmentTrackRepositoryInterface;
-use Magento\Sales\Model\Order\Shipment;
-use Magento\Sales\Model\Order\ShipmentRepository;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -28,9 +26,14 @@ use Psr\Log\LoggerInterface;
 class TrackingInfoProvider implements TrackingInfoProviderInterface
 {
     /**
-     * @var ShipmentTrackRepositoryInterface
+     * @var TrackRequestBuilder
      */
-    private $trackRepository;
+    private $trackRequestBuilder;
+
+    /**
+     * @var RequestTracksPipelineInterface
+     */
+    private $trackingPipeline;
 
     /**
      * @var ModuleConfig
@@ -38,19 +41,14 @@ class TrackingInfoProvider implements TrackingInfoProviderInterface
     private $moduleConfig;
 
     /**
-     * @var ShipmentRepositoryInterface|ShipmentRepository
-     */
-    private $shipmentRepository;
-
-    /**
-     * @var SearchCriteriaBuilder
-     */
-    private $searchCriteriaBuilder;
-
-    /**
      * @var ResolverInterface
      */
     private $resolver;
+
+    /**
+     * @var TrackingStatusInterfaceFactory
+     */
+    private $trackingStatusFactory;
 
     /**
      * @var LoggerInterface
@@ -60,26 +58,26 @@ class TrackingInfoProvider implements TrackingInfoProviderInterface
     /**
      * TrackingInfoProvider constructor.
      *
-     * @param ShipmentTrackRepositoryInterface $trackRepository
-     * @param ShipmentRepositoryInterface $shipmentRepository
-     * @param SearchCriteriaBuilder $searchCriteriaBuilder
+     * @param TrackRequestBuilder $trackRequestBuilder
+     * @param RequestTracksPipelineInterface $trackingPipeline
      * @param ModuleConfig $moduleConfig
      * @param ResolverInterface $resolver
+     * @param TrackingStatusInterfaceFactory $trackingStatusFactory
      * @param LoggerInterface $logger
      */
     public function __construct(
-        ShipmentTrackRepositoryInterface $trackRepository,
-        ShipmentRepositoryInterface $shipmentRepository,
-        SearchCriteriaBuilder $searchCriteriaBuilder,
+        TrackRequestBuilder $trackRequestBuilder,
+        RequestTracksPipelineInterface $trackingPipeline,
         ModuleConfig $moduleConfig,
         ResolverInterface $resolver,
+        TrackingStatusInterfaceFactory $trackingStatusFactory,
         LoggerInterface $logger
     ) {
-        $this->trackRepository = $trackRepository;
-        $this->shipmentRepository = $shipmentRepository;
-        $this->searchCriteriaBuilder = $searchCriteriaBuilder;
+        $this->trackRequestBuilder = $trackRequestBuilder;
+        $this->trackingPipeline = $trackingPipeline;
         $this->moduleConfig = $moduleConfig;
         $this->resolver = $resolver;
+        $this->trackingStatusFactory = $trackingStatusFactory;
         $this->logger = $logger;
     }
 
@@ -89,39 +87,25 @@ class TrackingInfoProvider implements TrackingInfoProviderInterface
      * @param string $trackingId
      * @param string $carrierCode
      * @param string $serviceName
-     * @return string[]
+     * @return TrackingStatusInterface
+     * @throws TrackingException
      */
-    public function getTrackingDetails(string $trackingId, string $carrierCode, string $serviceName): array
-    {
-        $searchCriteria = $this->searchCriteriaBuilder
-            ->addFilter(ShipmentTrackInterface::CARRIER_CODE, $carrierCode)
-            ->addFilter(ShipmentTrackInterface::TRACK_NUMBER, $trackingId)
-            ->create();
-        $searchResult = $this->trackRepository->getList($searchCriteria);
-
-        if ($searchResult->getTotalCount() === 0) {
-            return [];
-        }
-
-        $tracks = $searchResult->getItems();
-        /** @var ShipmentTrackInterface $track */
-        $track = array_shift($tracks);
-
+    public function getTrackingDetails(
+        string $trackingId,
+        string $carrierCode,
+        string $serviceName
+    ): TrackingStatusInterface {
         try {
-            /** @var Shipment $shipment */
-            $shipment = $this->shipmentRepository->get($track->getParentId());
-        } catch (LocalizedException $exception) {
+            $this->trackRequestBuilder->setTrackingNumber($trackingId);
+            $this->trackRequestBuilder->setCarrierCode($carrierCode);
+            $trackRequest = $this->trackRequestBuilder->build();
+        } catch (NoSuchEntityException $exception) {
             $this->logger->error($exception->getLogMessage());
-            return [];
+            throw new TrackingException(__('Unable to load tracking details for tracking number %1.', $trackingId));
         }
 
-        $recipientPostalCode = $shipment->getShippingAddress()->getPostcode();
-        $shippingOriginCountry = $this->moduleConfig->getShippingOriginCountry($shipment->getStoreId());
-        $resolver = $this->resolver->getLocale();
-        return [
-            'recipientPostalCode' => $recipientPostalCode,
-            'shippingOriginCountry' => $shippingOriginCountry,
-            'languages' => $resolver
-        ];
+        $artifactsContainer = $this->trackingPipeline->run($trackRequest->getStoreId(), [$trackRequest]);
+
+        return $this->trackingStatusFactory->create(['trackingNumber' => $trackingId]);
     }
 }

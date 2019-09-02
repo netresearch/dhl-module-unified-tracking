@@ -6,6 +6,8 @@ declare(strict_types=1);
 
 namespace Dhl\GroupTracking\Api;
 
+use Dhl\GroupTracking\Api\Data\TrackingStatusInterface;
+
 /**
  * Interface TrackingInfoProviderInterface
  *
@@ -23,7 +25,11 @@ interface TrackingInfoProviderInterface
      * @param string $trackingId
      * @param string $carrierCode
      * @param string $serviceName
-     * @return string[]
+     * @return TrackingStatusInterface
      */
-    public function getTrackingDetails(string $trackingId, string $carrierCode, string $serviceName): array;
+    public function getTrackingDetails(
+        string $trackingId,
+        string $carrierCode,
+        string $serviceName
+    ): TrackingStatusInterface;
 }

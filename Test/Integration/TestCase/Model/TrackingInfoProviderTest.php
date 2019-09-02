@@ -6,6 +6,8 @@ declare(strict_types=1);
 
 namespace Dhl\GroupTracking\Model;
 
+use Dhl\GroupTracking\Api\Data\TrackingStatusInterface;
+use Dhl\GroupTracking\Exception\TrackingException;
 use Dhl\ShippingCore\Test\Integration\Fixture\Data\AddressDe;
 use Dhl\ShippingCore\Test\Integration\Fixture\Data\AddressInterface;
 use Dhl\ShippingCore\Test\Integration\Fixture\Data\AddressUs;
@@ -14,9 +16,9 @@ use Dhl\ShippingCore\Test\Integration\Fixture\Data\SimpleProduct2;
 use Dhl\ShippingCore\Test\Integration\Fixture\ShipmentFixture;
 use Exception;
 use Magento\Sales\Model\Order\Shipment;
-use PHPUnit\Framework\TestCase;
-use Magento\TestFramework\ObjectManager;
 use Magento\TestFramework\Helper\Bootstrap;
+use Magento\TestFramework\ObjectManager;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class TrackingInfoProviderTest
@@ -55,11 +57,15 @@ class TrackingInfoProviderTest extends TestCase
      * Make sure the method does not break when empty tracking properties are given.
      *
      * @test
+     *
+     * @throws TrackingException
      */
     public function checkReturnTypeWithEmptyArguments()
     {
-        $trackingDetails = $this->trackingInfoProvider->getTrackingDetails('', '', '');
-        self::assertSame([], $trackingDetails);
+        $this->expectException(TrackingException::class);
+        $this->expectExceptionMessageRegExp('/^Unable to load tracking details for tracking number \w*./');
+
+        $this->trackingInfoProvider->getTrackingDetails('', '', '');
     }
 
     /**
@@ -70,6 +76,7 @@ class TrackingInfoProviderTest extends TestCase
      * @param Shipment $shipment
      * @param AddressInterface $address
      * @param $trackNumber
+     * @throws TrackingException
      */
     public function getTrackingDetails(Shipment $shipment, AddressInterface $address, $trackNumber)
     {
@@ -79,14 +86,7 @@ class TrackingInfoProviderTest extends TestCase
             ''
         );
 
-        self::assertInternalType('array', $trackingDetails);
-        self::assertNotEmpty($trackingDetails);
-        self::assertArrayHasKey('recipientPostalCode', $trackingDetails);
-        self::assertArrayHasKey('shippingOriginCountry', $trackingDetails);
-        self::assertArrayHasKey('languages', $trackingDetails);
-
-        self::assertSame($address->getPostcode(), $trackingDetails['recipientPostalCode']);
-        self::assertSame('DE', $trackingDetails['shippingOriginCountry']);
+        self::assertInstanceOf(TrackingStatusInterface::class, $trackingDetails);
     }
 
     /**
