@@ -7,7 +7,7 @@ declare(strict_types=1);
 namespace Dhl\GroupTracking\Webservice\Pipeline;
 
 use Dhl\GroupTracking\Api\Data\TrackingStatusInterface;
-use Dhl\Sdk\Group\Tracking\Api\Data\TrackResponseInterface;
+use Dhl\Sdk\GroupTracking\Api\Data\TrackResponseInterface;
 use Dhl\ShippingCore\Api\Data\Pipeline\ArtifactsContainerInterface;
 
 /**

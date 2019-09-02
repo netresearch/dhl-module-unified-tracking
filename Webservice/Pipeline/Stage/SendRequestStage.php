@@ -8,7 +8,7 @@ namespace Dhl\GroupTracking\Webservice\Pipeline\Stage;
 
 use Dhl\GroupTracking\Model\Config\ModuleConfig;
 use Dhl\GroupTracking\Webservice\Pipeline\ArtifactsContainer;
-use Dhl\Sdk\Group\Tracking\Api\ServiceFactoryInterface;
+use Dhl\Sdk\GroupTracking\Api\ServiceFactoryInterface;
 use Dhl\ShippingCore\Api\Data\Pipeline\ArtifactsContainerInterface;
 use Dhl\ShippingCore\Api\Data\TrackRequest\TrackRequestInterface;
 use Dhl\ShippingCore\Api\Pipeline\RequestTracksStageInterface;

@@ -7,11 +7,11 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     <!-- # interface preferences -->
     <preference for="Dhl\GroupTracking\Api\TrackingInfoProviderInterface" type="Dhl\GroupTracking\Model\TrackingInfoProvider"/>
-    <preference for="Dhl\GroupTracking\Api\Data\TrackingStatusInterface" type="Dhl\GroupTracking\Model\TrackingStatus"/>
     <preference for="Dhl\GroupTracking\Api\Data\TrackingEventInterface" type="Dhl\GroupTracking\Model\TrackingEvent"/>
+    <preference for="Dhl\GroupTracking\Api\Data\TrackingStatusInterface" type="Dhl\GroupTracking\Model\TrackingStatus"/>
 
     <!-- # sdk preferences -->
-    <preference for="Dhl\Sdk\Group\Tracking\Api\ServiceFactoryInterface" type="Dhl\Sdk\Group\Tracking\Service\ServiceFactory"/>
+    <preference for="Dhl\Sdk\GroupTracking\Api\ServiceFactoryInterface" type="Dhl\Sdk\GroupTracking\Service\ServiceFactory"/>
 
     <!-- # virtual types -->
     <virtualType name="Dhl\GroupTracking\Webservice\Pipeline\RequestTracksPipeline\Virtual" type="Dhl\ShippingCore\Webservice\Pipeline\Track\RequestTracksPipeline">

@@ -9,7 +9,7 @@ namespace Dhl\GroupTracking\Webservice\Pipeline\Stage;
 use Dhl\GroupTracking\Api\Data\TrackingEventInterfaceFactory;
 use Dhl\GroupTracking\Api\Data\TrackingStatusInterfaceFactory;
 use Dhl\GroupTracking\Webservice\Pipeline\ArtifactsContainer;
-use Dhl\Sdk\Group\Tracking\Api\Data\PersonInterface;
+use Dhl\Sdk\GroupTracking\Api\Data\PersonInterface;
 use Dhl\ShippingCore\Api\Data\Pipeline\ArtifactsContainerInterface;
 use Dhl\ShippingCore\Api\Data\TrackRequest\TrackRequestInterface;
 use Dhl\ShippingCore\Api\Pipeline\RequestTracksStageInterface;
