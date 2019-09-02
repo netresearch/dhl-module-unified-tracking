@@ -7,13 +7,11 @@ declare(strict_types=1);
 namespace Dhl\GroupTracking\Model;
 
 use Dhl\GroupTracking\Api\Data\TrackingStatusInterface;
-use Dhl\GroupTracking\Api\Data\TrackingStatusInterfaceFactory;
 use Dhl\GroupTracking\Api\TrackingInfoProviderInterface;
 use Dhl\GroupTracking\Exception\TrackingException;
-use Dhl\GroupTracking\Model\Config\ModuleConfig;
+use Dhl\GroupTracking\Webservice\Pipeline\ArtifactsContainer;
 use Dhl\ShippingCore\Api\Pipeline\RequestTracksPipelineInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
-use Magento\Framework\Locale\ResolverInterface;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -36,21 +34,6 @@ class TrackingInfoProvider implements TrackingInfoProviderInterface
     private $trackingPipeline;
 
     /**
-     * @var ModuleConfig
-     */
-    private $moduleConfig;
-
-    /**
-     * @var ResolverInterface
-     */
-    private $resolver;
-
-    /**
-     * @var TrackingStatusInterfaceFactory
-     */
-    private $trackingStatusFactory;
-
-    /**
      * @var LoggerInterface
      */
     private $logger;
@@ -60,24 +43,15 @@ class TrackingInfoProvider implements TrackingInfoProviderInterface
      *
      * @param TrackRequestBuilder $trackRequestBuilder
      * @param RequestTracksPipelineInterface $trackingPipeline
-     * @param ModuleConfig $moduleConfig
-     * @param ResolverInterface $resolver
-     * @param TrackingStatusInterfaceFactory $trackingStatusFactory
      * @param LoggerInterface $logger
      */
     public function __construct(
         TrackRequestBuilder $trackRequestBuilder,
         RequestTracksPipelineInterface $trackingPipeline,
-        ModuleConfig $moduleConfig,
-        ResolverInterface $resolver,
-        TrackingStatusInterfaceFactory $trackingStatusFactory,
         LoggerInterface $logger
     ) {
         $this->trackRequestBuilder = $trackRequestBuilder;
         $this->trackingPipeline = $trackingPipeline;
-        $this->moduleConfig = $moduleConfig;
-        $this->resolver = $resolver;
-        $this->trackingStatusFactory = $trackingStatusFactory;
         $this->logger = $logger;
     }
 
@@ -104,8 +78,10 @@ class TrackingInfoProvider implements TrackingInfoProviderInterface
             throw new TrackingException(__('Unable to load tracking details for tracking number %1.', $trackingId));
         }
 
+        /** @var ArtifactsContainer $artifactsContainer */
         $artifactsContainer = $this->trackingPipeline->run($trackRequest->getStoreId(), [$trackRequest]);
+        $trackResponses = $artifactsContainer->getTrackResponses();
 
-        return $this->trackingStatusFactory->create(['trackingNumber' => $trackingId]);
+        return $trackResponses[$trackingId];
     }
 }
