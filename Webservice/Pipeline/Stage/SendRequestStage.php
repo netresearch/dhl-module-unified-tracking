@@ -95,7 +95,7 @@ class SendRequestStage implements RequestTracksStageInterface
                 $this->config->getShippingOriginCountry($artifactsContainer->getStoreId()),
                 $this->config->getShippingOriginCountry($artifactsContainer->getStoreId()),
                 $shipment->getShippingAddress()->getPostcode(),
-                $this->resolver->getLocale()
+                substr($this->resolver->getLocale(), 0, 2)
             );
 
             $artifactsContainer->addApiResponse($request->getTrackNumber(), $trackingInformation);
