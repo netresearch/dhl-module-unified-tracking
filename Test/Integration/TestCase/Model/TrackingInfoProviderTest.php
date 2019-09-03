@@ -109,7 +109,7 @@ class TrackingInfoProviderTest extends TestCase
         $shipmentDe->save();
 
         $trackDe = $trackFactory->create();
-        $trackDe->setCarrierCode('flatrate_flatrate')->setTrackNumber('123456')->setParentId($shipmentDe->getId());
+        $trackDe->setCarrierCode('flatrate')->setTrackNumber('123456')->setParentId($shipmentDe->getId());
 
         $shipmentDe->addTrack($trackDe);
         $shipmentDe->getTracksCollection()->save();
@@ -123,7 +123,7 @@ class TrackingInfoProviderTest extends TestCase
         );
         $shipmentUs->save();
         $trackUs = $trackFactory->create();
-        $trackUs->setCarrierCode('flatrate_flatrate')->setTrackNumber('1234567')->setParentId($shipmentUs->getId());
+        $trackUs->setCarrierCode('flatrate')->setTrackNumber('1234567')->setParentId($shipmentUs->getId());
         $shipmentUs->addTrack($trackUs);
         $shipmentUs->getTracksCollection()->save();
 

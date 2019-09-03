@@ -63,7 +63,8 @@ class SendRequestStage implements RequestTracksStageInterface
         ResolverInterface $resolver,
         LoggerInterface $logger,
         array $serviceNames = []
-    ) {
+    )
+    {
         $this->serviceFactory = $serviceFactory;
         $this->config = $config;
         $this->resolver = $resolver;
@@ -97,8 +98,9 @@ class SendRequestStage implements RequestTracksStageInterface
                 $shipment->getShippingAddress()->getPostcode(),
                 substr($this->resolver->getLocale(), 0, 2)
             );
-
-            $artifactsContainer->addApiResponse($request->getTrackNumber(), $trackingInformation);
+            foreach ($trackingInformation as $track) {
+                $artifactsContainer->addApiResponse($track->getId(), $track);
+            }
         }
 
         return $requests;

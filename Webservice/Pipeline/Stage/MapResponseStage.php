@@ -6,10 +6,9 @@ declare(strict_types=1);
 
 namespace Dhl\GroupTracking\Webservice\Pipeline\Stage;
 
-use Dhl\GroupTracking\Api\Data\TrackingEventInterfaceFactory;
-use Dhl\GroupTracking\Api\Data\TrackingStatusInterfaceFactory;
 use Dhl\GroupTracking\Webservice\Pipeline\ArtifactsContainer;
-use Dhl\Sdk\GroupTracking\Api\Data\PersonInterface;
+use Dhl\GroupTracking\Webservice\Pipeline\ResponseDataMapper;
+use Dhl\Sdk\GroupTracking\Api\Data\TrackResponseInterface;
 use Dhl\ShippingCore\Api\Data\Pipeline\ArtifactsContainerInterface;
 use Dhl\ShippingCore\Api\Data\TrackRequest\TrackRequestInterface;
 use Dhl\ShippingCore\Api\Pipeline\RequestTracksStageInterface;
@@ -24,26 +23,19 @@ use Dhl\ShippingCore\Api\Pipeline\RequestTracksStageInterface;
 class MapResponseStage implements RequestTracksStageInterface
 {
     /**
-     * @var TrackingStatusInterfaceFactory
+     * @var ResponseDataMapper
      */
-    private $trackingStatusFactory;
-
-    /**
-     * @var TrackingEventInterfaceFactory
-     */
-    private $trackingEventFactory;
+    private $responseDataMapper;
 
     /**
      * MapResponseStage constructor.
-     * @param TrackingStatusInterfaceFactory $trackingStatusFactory
-     * @param TrackingEventInterfaceFactory $trackingEventFactory
+     *
+     * @param ResponseDataMapper $responseDataMapper
      */
     public function __construct(
-        TrackingStatusInterfaceFactory $trackingStatusFactory,
-        TrackingEventInterfaceFactory $trackingEventFactory
+        ResponseDataMapper $responseDataMapper
     ) {
-        $this->trackingStatusFactory = $trackingStatusFactory;
-        $this->trackingEventFactory = $trackingEventFactory;
+        $this->responseDataMapper = $responseDataMapper;
     }
 
     /**
@@ -55,63 +47,14 @@ class MapResponseStage implements RequestTracksStageInterface
      */
     public function execute(array $requests, ArtifactsContainerInterface $artifactsContainer): array
     {
-        $trackingResponses = $artifactsContainer->getApiResponses();
-
-        foreach ($requests as $request) {
-            $trackingInformation = $trackingResponses[$request->getTrackNumber()];
-
-            $destinationAddress = [
-                $trackingInformation->getDestinationAddress()->getAddressLocality(),
-                $trackingInformation->getDestinationAddress()->getCountryCode(),
-                $trackingInformation->getDestinationAddress()->getPostalCode(),
-                $trackingInformation->getDestinationAddress()->getStreetAddress(),
-            ];
-            $destinationAddress = array_filter($destinationAddress);
-
-            $signee = $trackingInformation->getProofOfDelivery()->getSignee();
-            if (!$signee instanceof PersonInterface) {
-                $signedBy = '';
-            } else {
-                $signee = [
-                    $signee->getOrganization(),
-                    $signee->getName(),
-                    $signee->getGivenName(),
-                    $signee->getFamilyName(),
-                ];
-                $signee = array_filter($signee);
-                $signedBy = implode(' ', $signee);
+        $response = $artifactsContainer->getApiResponses();
+        array_walk(
+            $response,
+            function (TrackResponseInterface $trackResponse) use ($artifactsContainer) {
+                $trackingStatus = $this->responseDataMapper->createTrackResponse($trackResponse);
+                $artifactsContainer->addTrackResponse($trackingStatus->getTrackingNumber(), $trackingStatus);
             }
-
-            $progressDetail = [];
-            foreach ($trackingInformation->getStatusEvents() as $statusEvent) {
-                $deliveryLocation = [
-                    $statusEvent->getLocation()->getAddressLocality(),
-                    $statusEvent->getLocation()->getCountryCode(),
-                    $statusEvent->getLocation()->getPostalCode(),
-                    $statusEvent->getLocation()->getStreetAddress(),
-                ];
-                $deliveryLocation = array_filter($deliveryLocation);
-
-                $trackingEvent = $this->trackingEventFactory->create([
-                    'deliveryDate' => $statusEvent->getTimeStamp()->format('Y-m-d'),
-                    'deliveryTime' => $statusEvent->getTimeStamp()->format('H:i:s'),
-                    'deliveryLocation' => implode(' ', $deliveryLocation),
-                    'activity' => $statusEvent->getDescription(),
-                ]);
-                $progressDetail[]= $trackingEvent;
-            }
-
-            $trackingStatus = $this->trackingStatusFactory->create([
-                'trackingNumber' => $request->getTrackNumber(),
-                'status' => $trackingInformation->getLatestStatus()->getDescription(),
-                'weight' => $trackingInformation->getPhysicalAttributes()->getWeight(),
-                'deliveryLocation' => implode(' ', $destinationAddress),
-                'signedBy' => $signedBy,
-                'progressDetail' => $progressDetail,
-            ]);
-
-            $artifactsContainer->addTrackResponse($request->getTrackNumber(), $trackingStatus);
-        }
+        );
 
         return $requests;
     }
