@@ -45,22 +45,30 @@ class SendRequestStage implements RequestTracksStageInterface
     private $logger;
 
     /**
+     * @var string[]
+     */
+    private $serviceNames;
+
+    /**
      * SendRequestStage constructor.
      * @param ServiceFactoryInterface $serviceFactory
      * @param ModuleConfig $config
      * @param ResolverInterface $resolver
      * @param LoggerInterface $logger
+     * @param string[] $serviceNames
      */
     public function __construct(
         ServiceFactoryInterface $serviceFactory,
         ModuleConfig $config,
         ResolverInterface $resolver,
-        LoggerInterface $logger
+        LoggerInterface $logger,
+        array $serviceNames = []
     ) {
         $this->serviceFactory = $serviceFactory;
         $this->config = $config;
         $this->resolver = $resolver;
         $this->logger = $logger;
+        $this->serviceNames = $serviceNames;
     }
 
     /**
@@ -83,7 +91,7 @@ class SendRequestStage implements RequestTracksStageInterface
 
             $trackingInformation = $trackingService->retrieveTrackingInformation(
                 $request->getTrackNumber(),
-                null,
+                $this->serviceNames[$request->getSalesTrack()->getCarrierCode()] ?? null,
                 $this->config->getShippingOriginCountry($artifactsContainer->getStoreId()),
                 $this->config->getShippingOriginCountry($artifactsContainer->getStoreId()),
                 $shipment->getShippingAddress()->getPostcode(),
