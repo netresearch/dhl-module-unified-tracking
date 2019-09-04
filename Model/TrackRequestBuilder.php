@@ -121,7 +121,7 @@ class TrackRequestBuilder
         try {
             $shipment = $this->shipmentRepository->get($track->getParentId());
         } catch (InputException $exception) {
-            throw new NoSuchEntityException(__('No shipment found with shipment ID %1', $track->getParentId()));
+            throw new NoSuchEntityException(__('No shipment found with shipment ID %1', $track->getParentId()), $exception);
         }
 
         $trackRequest = $this->trackRequestFactory->create(

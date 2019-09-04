@@ -27,6 +27,13 @@ class ArtifactsContainer implements ArtifactsContainerInterface
     private $storeId;
 
     /**
+     * Error messages occurred during pipeline execution.
+     *
+     * @var string[]
+     */
+    private $errors = [];
+
+    /**
      * API (SDK) response objects.
      *
      * @var TrackResponseInterface[]
@@ -49,6 +56,18 @@ class ArtifactsContainer implements ArtifactsContainerInterface
     public function setStoreId(int $storeId)
     {
         $this->storeId = $storeId;
+    }
+
+    /**
+     * Add error message for a tracking request.
+     *
+     * @param string $trackingNumber
+     * @param string $errorMessage
+     * @return void
+     */
+    public function addError(string $trackingNumber, string $errorMessage)
+    {
+        $this->errors[$trackingNumber] = $errorMessage;
     }
 
     /**
@@ -82,6 +101,16 @@ class ArtifactsContainer implements ArtifactsContainerInterface
     public function getStoreId(): int
     {
         return (int) $this->storeId;
+    }
+
+    /**
+     * Obtain error messages received from the web service.
+     *
+     * @return string[]
+     */
+    public function getErrors()
+    {
+        return $this->errors;
     }
 
     /**

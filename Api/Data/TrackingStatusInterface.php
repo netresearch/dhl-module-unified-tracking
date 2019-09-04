@@ -6,6 +6,8 @@ declare(strict_types=1);
 
 namespace Dhl\GroupTracking\Api\Data;
 
+use Magento\Framework\Phrase;
+
 /**
  * Interface TrackingStatusInterface
  *
@@ -25,6 +27,13 @@ interface TrackingStatusInterface
     public function getTrackingNumber(): string;
 
     /**
+     * Obtain the track & trace portal URL.
+     *
+     * @return string
+     */
+    public function getTrackingUrl(): string;
+
+    /**
      * Obtain the carrier title.
      *
      * @return string
@@ -32,7 +41,27 @@ interface TrackingStatusInterface
     public function getCarrierTitle(): string;
 
     /**
-     * Obtain the current delivery status.
+     * Obtain the most recent tracking status description.
+     *
+     * @return string
+     */
+    public function getTrackSummary(): string;
+
+    /**
+     * Obtain tracking error message.
+     *
+     * @return Phrase|null
+     */
+    public function getErrorMessage();
+
+    /**
+     * Obtain the current delivery status code.
+     *
+     * - pre-transit
+     * - transit
+     * - delivered
+     * - failure
+     * - unknown
      *
      * @return string
      */

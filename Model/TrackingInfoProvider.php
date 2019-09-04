@@ -49,8 +49,7 @@ class TrackingInfoProvider implements TrackingInfoProviderInterface
         TrackRequestBuilder $trackRequestBuilder,
         RequestTracksPipelineInterface $trackingPipeline,
         LoggerInterface $logger
-    )
-    {
+    ) {
         $this->trackRequestBuilder = $trackRequestBuilder;
         $this->trackingPipeline = $trackingPipeline;
         $this->logger = $logger;
@@ -69,8 +68,7 @@ class TrackingInfoProvider implements TrackingInfoProviderInterface
         string $trackingId,
         string $carrierCode,
         string $serviceName
-    ): TrackingStatusInterface
-    {
+    ): TrackingStatusInterface {
         try {
             $this->trackRequestBuilder->setTrackingNumber($trackingId);
             $this->trackRequestBuilder->setCarrierCode($carrierCode);
@@ -83,6 +81,7 @@ class TrackingInfoProvider implements TrackingInfoProviderInterface
         /** @var ArtifactsContainer $artifactsContainer */
         $artifactsContainer = $this->trackingPipeline->run($trackRequest->getStoreId(), [$trackRequest]);
         $trackResponses = $artifactsContainer->getTrackResponses();
+
         return $trackResponses[$trackingId];
     }
 }

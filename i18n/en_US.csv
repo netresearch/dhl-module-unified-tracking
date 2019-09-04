@@ -1,2 +1,4 @@
+"An error occurred while retrieving tracking details for tracking number %1: %2","An error occurred while retrieving tracking details for tracking number %1: %2"
 "No track found for carrier %1 with tracking number %2.","No track found for carrier %1 with tracking number %2."
+"No tracking details found for tracking number %1.","No tracking details found for tracking number %1."
 "Unable to load tracking details for tracking number %1.","Unable to load tracking details for tracking number %1."

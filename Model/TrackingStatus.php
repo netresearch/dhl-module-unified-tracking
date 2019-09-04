@@ -8,6 +8,7 @@ namespace Dhl\GroupTracking\Model;
 
 use Dhl\GroupTracking\Api\Data\TrackingEventInterface;
 use Dhl\GroupTracking\Api\Data\TrackingStatusInterface;
+use Magento\Framework\Phrase;
 use Magento\Shipping\Model\Tracking\Result\Status;
 
 /**
@@ -27,7 +28,17 @@ class TrackingStatus extends Status implements TrackingStatusInterface
     /**
      * @var string
      */
+    private $trackingUrl;
+
+    /**
+     * @var string
+     */
     private $carrierTitle;
+
+    /**
+     * @var string
+     */
+    private $trackSummary;
 
     /**
      * @var string
@@ -52,6 +63,16 @@ class TrackingStatus extends Status implements TrackingStatusInterface
     /**
      * @var string
      */
+    private $deliveryDate;
+
+    /**
+     * @var string
+     */
+    private $deliveryTime;
+
+    /**
+     * @var string
+     */
     private $signedBy;
 
     /**
@@ -60,46 +81,71 @@ class TrackingStatus extends Status implements TrackingStatusInterface
     private $progressDetail;
 
     /**
+     * @var Phrase
+     */
+    private $errorMessage;
+
+    /**
      * TrackingStatus constructor.
      *
      * @param string $trackingNumber
+     * @param string $trackingUrl
      * @param string $carrierTitle
+     * @param string $trackSummary
      * @param string $status
      * @param string $shippedDate
      * @param float|null $weight
      * @param string $deliveryLocation
+     * @param string $deliveryDate
+     * @param string $deliveryTime
      * @param string $signedBy
      * @param TrackingEventInterface[] $progressDetail
+     * @param Phrase|null $errorMessage
      * @param mixed[] $data
      */
     public function __construct(
         string $trackingNumber,
+        string $trackingUrl = '',
         string $carrierTitle = '',
+        string $trackSummary = '',
         string $status = '',
         string $shippedDate = '',
         float $weight = null,
         string $deliveryLocation = '',
+        string $deliveryDate = '',
+        string $deliveryTime = '',
         string $signedBy = '',
         array $progressDetail = [],
+        Phrase $errorMessage = null,
         array $data = []
     ) {
         $this->trackingNumber = $trackingNumber;
+        $this->trackingUrl = $trackingUrl;
         $this->carrierTitle = $carrierTitle;
+        $this->trackSummary = $trackSummary;
         $this->status = $status;
         $this->shippedDate = $shippedDate;
         $this->weight = $weight;
         $this->deliveryLocation = $deliveryLocation;
+        $this->deliveryDate = $deliveryDate;
+        $this->deliveryTime = $deliveryTime;
         $this->signedBy = $signedBy;
         $this->progressDetail = $progressDetail;
+        $this->errorMessage = $errorMessage;
 
         $data['tracking'] = $trackingNumber;
+        $data['url'] = $trackingUrl;
         $data['carrier_title'] = $carrierTitle;
+        $data['track_summary'] = $trackSummary;
         $data['status'] = $status;
         $data['shipped_date'] = $shippedDate;
         $data['weight'] = $weight;
         $data['delivery_location'] = $deliveryLocation;
+        $data['deliverydate'] = $deliveryDate;
+        $data['deliverytime'] = $deliveryTime;
         $data['signedby'] = $signedBy;
         $data['progressdetail'] = $progressDetail;
+        $data['error_message'] = $errorMessage;
 
         parent::__construct($data);
     }
@@ -115,6 +161,16 @@ class TrackingStatus extends Status implements TrackingStatusInterface
     }
 
     /**
+     * Obtain the track&trace portal URL.
+     *
+     * @return string
+     */
+    public function getTrackingUrl(): string
+    {
+        return $this->trackingUrl;
+    }
+
+    /**
      * Obtain the carrier title.
      *
      * @return string
@@ -125,7 +181,33 @@ class TrackingStatus extends Status implements TrackingStatusInterface
     }
 
     /**
-     * Obtain the current delivery status.
+     * Obtain the most recent tracking status description.
+     *
+     * @return string
+     */
+    public function getTrackSummary(): string
+    {
+        return $this->trackSummary;
+    }
+
+    /**
+     * Obtain tracking error message.
+     *
+     * @return Phrase|null
+     */
+    public function getErrorMessage()
+    {
+        return $this->errorMessage;
+    }
+
+    /**
+     * Obtain the current delivery status code.
+     *
+     * - pre-transit
+     * - transit
+     * - delivered
+     * - failure
+     * - unknown
      *
      * @return string
      */
@@ -162,6 +244,23 @@ class TrackingStatus extends Status implements TrackingStatusInterface
     public function getDeliveryLocation(): string
     {
         return $this->deliveryLocation;
+    }
+
+    /**
+     * Obtain the
+     * @return string
+     */
+    public function getDeliveryDate(): string
+    {
+        return $this->deliveryDate;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDeliveryTime(): string
+    {
+        return $this->deliveryTime;
     }
 
     /**

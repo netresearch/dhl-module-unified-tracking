@@ -8,7 +8,6 @@ namespace Dhl\GroupTracking\Webservice\Pipeline\Stage;
 
 use Dhl\GroupTracking\Webservice\Pipeline\ArtifactsContainer;
 use Dhl\GroupTracking\Webservice\Pipeline\ResponseDataMapper;
-use Dhl\Sdk\GroupTracking\Api\Data\TrackResponseInterface;
 use Dhl\ShippingCore\Api\Data\Pipeline\ArtifactsContainerInterface;
 use Dhl\ShippingCore\Api\Data\TrackRequest\TrackRequestInterface;
 use Dhl\ShippingCore\Api\Pipeline\RequestTracksStageInterface;
@@ -47,14 +46,29 @@ class MapResponseStage implements RequestTracksStageInterface
      */
     public function execute(array $requests, ArtifactsContainerInterface $artifactsContainer): array
     {
-        $response = $artifactsContainer->getApiResponses();
-        array_walk(
-            $response,
-            function (TrackResponseInterface $trackResponse) use ($artifactsContainer) {
-                $trackingStatus = $this->responseDataMapper->createTrackResponse($trackResponse);
-                $artifactsContainer->addTrackResponse($trackingStatus->getTrackingNumber(), $trackingStatus);
+        $errors = $artifactsContainer->getErrors();
+        $responses = $artifactsContainer->getApiResponses();
+
+        foreach ($requests as $request) {
+            $trackingNumber = $request->getTrackNumber();
+            if (array_key_exists($trackingNumber, $errors)) {
+                // service exception
+                $errorMessage = $errors[$trackingNumber];
+                $error = __('An error occurred while retrieving tracking details for tracking number %1: %2', $trackingNumber, $errorMessage);
+                $trackingStatus = $this->responseDataMapper->createErrorResponse($trackingNumber, $error);
+                $artifactsContainer->addTrackResponse($trackingNumber, $trackingStatus);
+            } elseif (array_key_exists($trackingNumber, $responses)) {
+                // web service returned a match with the response
+                $track = $responses[$trackingNumber];
+                $trackingStatus = $this->responseDataMapper->createTrackResponse($track);
+                $artifactsContainer->addTrackResponse($trackingNumber, $trackingStatus);
+            } else {
+                // web service returned no match with the response
+                $error = __('No tracking details found for tracking number %1.', $trackingNumber);
+                $trackingStatus = $this->responseDataMapper->createErrorResponse($trackingNumber, $error);
+                $artifactsContainer->addTrackResponse($trackingNumber, $trackingStatus);
             }
-        );
+        }
 
         return $requests;
     }

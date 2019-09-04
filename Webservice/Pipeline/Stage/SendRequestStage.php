@@ -9,6 +9,7 @@ namespace Dhl\GroupTracking\Webservice\Pipeline\Stage;
 use Dhl\GroupTracking\Model\Config\ModuleConfig;
 use Dhl\GroupTracking\Webservice\Pipeline\ArtifactsContainer;
 use Dhl\Sdk\GroupTracking\Api\ServiceFactoryInterface;
+use Dhl\Sdk\GroupTracking\Exception\ServiceException;
 use Dhl\ShippingCore\Api\Data\Pipeline\ArtifactsContainerInterface;
 use Dhl\ShippingCore\Api\Data\TrackRequest\TrackRequestInterface;
 use Dhl\ShippingCore\Api\Pipeline\RequestTracksStageInterface;
@@ -63,8 +64,7 @@ class SendRequestStage implements RequestTracksStageInterface
         ResolverInterface $resolver,
         LoggerInterface $logger,
         array $serviceNames = []
-    )
-    {
+    ) {
         $this->serviceFactory = $serviceFactory;
         $this->config = $config;
         $this->resolver = $resolver;
@@ -81,25 +81,30 @@ class SendRequestStage implements RequestTracksStageInterface
      */
     public function execute(array $requests, ArtifactsContainerInterface $artifactsContainer): array
     {
+        $trackingService = $this->serviceFactory->createTrackingService(
+            $this->config->getConsumerKey(),
+            $this->logger
+        );
+
         foreach ($requests as $request) {
             /** @var \Magento\Sales\Model\Order\Shipment $shipment */
             $shipment = $request->getSalesShipment();
 
-            $trackingService = $this->serviceFactory->createTrackingService(
-                $this->config->getConsumerKey(),
-                $this->logger
-            );
+            try {
+                $trackingInformation = $trackingService->retrieveTrackingInformation(
+                    $request->getTrackNumber(),
+                    $this->serviceNames[$request->getSalesTrack()->getCarrierCode()] ?? null,
+                    $this->config->getShippingOriginCountry($artifactsContainer->getStoreId()),
+                    $this->config->getShippingOriginCountry($artifactsContainer->getStoreId()),
+                    $shipment->getShippingAddress()->getPostcode(),
+                    substr($this->resolver->getLocale(), 0, 2)
+                );
 
-            $trackingInformation = $trackingService->retrieveTrackingInformation(
-                $request->getTrackNumber(),
-                $this->serviceNames[$request->getSalesTrack()->getCarrierCode()] ?? null,
-                $this->config->getShippingOriginCountry($artifactsContainer->getStoreId()),
-                $this->config->getShippingOriginCountry($artifactsContainer->getStoreId()),
-                $shipment->getShippingAddress()->getPostcode(),
-                substr($this->resolver->getLocale(), 0, 2)
-            );
-            foreach ($trackingInformation as $track) {
-                $artifactsContainer->addApiResponse($track->getId(), $track);
+                foreach ($trackingInformation as $track) {
+                    $artifactsContainer->addApiResponse($track->getId(), $track);
+                }
+            } catch (ServiceException $exception) {
+                $artifactsContainer->addError($request->getTrackNumber(), $exception->getMessage());
             }
         }
 

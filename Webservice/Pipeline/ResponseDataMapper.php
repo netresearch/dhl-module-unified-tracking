@@ -6,11 +6,16 @@ declare(strict_types=1);
 
 namespace Dhl\GroupTracking\Webservice\Pipeline;
 
+use Dhl\GroupTracking\Api\Data\TrackingEventInterface;
 use Dhl\GroupTracking\Api\Data\TrackingEventInterfaceFactory;
 use Dhl\GroupTracking\Api\Data\TrackingStatusInterface;
 use Dhl\GroupTracking\Api\Data\TrackingStatusInterfaceFactory;
+use Dhl\Sdk\GroupTracking\Api\Data\AddressInterface;
 use Dhl\Sdk\GroupTracking\Api\Data\PersonInterface;
+use Dhl\Sdk\GroupTracking\Api\Data\ShipmentEventInterface;
 use Dhl\Sdk\GroupTracking\Api\Data\TrackResponseInterface;
+use Magento\Framework\Phrase;
+use Magento\Framework\Stdlib\DateTime\TimezoneInterface;
 
 /**
  * Class ResponseDataMapper
@@ -21,6 +26,11 @@ use Dhl\Sdk\GroupTracking\Api\Data\TrackResponseInterface;
  */
 class ResponseDataMapper
 {
+    /**
+     * @var TimezoneInterface
+     */
+    private $date;
+
     /**
      * @var TrackingStatusInterfaceFactory
      */
@@ -34,101 +44,168 @@ class ResponseDataMapper
     /**
      * MapResponseStage constructor.
      *
+     * @param TimezoneInterface $date
      * @param TrackingStatusInterfaceFactory $trackingStatusFactory
      * @param TrackingEventInterfaceFactory $trackingEventFactory
      */
     public function __construct(
+        TimezoneInterface $date,
         TrackingStatusInterfaceFactory $trackingStatusFactory,
         TrackingEventInterfaceFactory $trackingEventFactory
-    )
-    {
+    ) {
+        $this->date = $date;
         $this->trackingStatusFactory = $trackingStatusFactory;
         $this->trackingEventFactory = $trackingEventFactory;
     }
 
     /**
-     * Create track response
+     * Extract localized date and time parts from \DateTime object.
+     *
+     * The date needs to be formatted according to the current scope (admin or store front). Note that `scopeDate`
+     * does not accept a \DateTime object.
+     *
+     * @see \Magento\Framework\Stdlib\DateTime\TimezoneInterface::scopeDate
+     * @link https://github.com/magento/magento2/issues/23359
+     *
+     * @param \DateTime $dateTime
+     * @return string[]
+     */
+    private function getDateParts(\DateTime $dateTime)
+    {
+        $scopeDate = $this->date->scopeDate(null, $dateTime->getTimestamp());
+        $date = $this->date->formatDate($scopeDate);
+        $fullDate = $this->date->formatDate($scopeDate, \IntlDateFormatter::SHORT, true);
+        $time = trim(str_replace($date, '', $fullDate), ' ,');
+
+        return [
+            'date' => $date,
+            'time' => $time,
+        ];
+    }
+
+    /**
+     * Extract non-empty person properties.
+     *
+     * @param PersonInterface|null $person
+     * @return string[]
+     */
+    private function mapPerson(PersonInterface $person = null): array
+    {
+        if (!$person) {
+            return [];
+        }
+
+        $data = [$person->getOrganization(), $person->getName(), $person->getGivenName(), $person->getFamilyName()];
+
+        return array_filter($data);
+    }
+
+    /**
+     * Extract non-empty address properties.
+     *
+     * @param AddressInterface|null $address
+     * @return string[]
+     */
+    private function mapAddress(AddressInterface $address = null): array
+    {
+        if (!$address) {
+            return [];
+        }
+
+        $data = [
+            $address->getAddressLocality(),
+            $address->getCountryCode(),
+            $address->getPostalCode(),
+            $address->getStreetAddress(),
+        ];
+
+        return array_filter($data);
+    }
+
+    /**
+     * Map a web service shipment event to an application tracking event.
+     *
+     * @param ShipmentEventInterface $shipmentEvent
+     * @return TrackingEventInterface
+     */
+    private function mapStatusEvent(ShipmentEventInterface $shipmentEvent): TrackingEventInterface
+    {
+        $date = $this->getDateParts($shipmentEvent->getTimeStamp());
+        $location = $this->mapAddress($shipmentEvent->getLocation());
+        $trackingEvent = $this->trackingEventFactory->create(
+            [
+                'deliveryDate' => $date['date'],
+                'deliveryTime' => $date['time'],
+                'deliveryLocation' => implode(' ', $location),
+                'activity' => $shipmentEvent->getDescription(),
+            ]
+        );
+
+        return $trackingEvent;
+    }
+
+    /**
+     * Create track response.
      *
      * @param TrackResponseInterface $trackingInformation
      * @return TrackingStatusInterface
      */
-    public function createTrackResponse(TrackResponseInterface $trackingInformation)
+    public function createTrackResponse(TrackResponseInterface $trackingInformation): TrackingStatusInterface
     {
-        $destination = $trackingInformation->getDestinationAddress();
-        if ($destination !== null) {
-            $destinationAddress = [
-                $trackingInformation->getDestinationAddress()->getAddressLocality(),
-                $trackingInformation->getDestinationAddress()->getCountryCode(),
-                $trackingInformation->getDestinationAddress()->getPostalCode(),
-                $trackingInformation->getDestinationAddress()->getStreetAddress(),
-            ];
-        } else {
-            $destinationAddress = [];
-        }
+        $weight = $trackingInformation->getPhysicalAttributes()
+            ? $trackingInformation->getPhysicalAttributes()->getWeight()
+            : null;
+        $progressDetail = array_map(
+            function (ShipmentEventInterface $shipmentEvent) {
+                return $this->mapStatusEvent($shipmentEvent);
+            },
+            $trackingInformation->getStatusEvents()
+        );
 
-        $destinationAddress = array_filter($destinationAddress);
-
-        $proofOfDelivery = $trackingInformation->getProofOfDelivery();
-        if ($proofOfDelivery !== null) {
-            $signee = $trackingInformation->getProofOfDelivery()->getSignee();
-        } else {
-            $signee = null;
-        }
-
-        if (!$signee instanceof PersonInterface) {
-            $signedBy = '';
-        } else {
-            $signee = [
-                $signee->getOrganization(),
-                $signee->getName(),
-                $signee->getGivenName(),
-                $signee->getFamilyName(),
-            ];
-            $signee = array_filter($signee);
-            $signedBy = implode(' ', $signee);
-        }
-
-        $progressDetail = [];
-
-        foreach ($trackingInformation->getStatusEvents() as $statusEvent) {
-            $location = $statusEvent->getLocation();
-            if ($location !== null) {
-                $deliveryLocation = [
-                    $statusEvent->getLocation()->getAddressLocality(),
-                    $statusEvent->getLocation()->getCountryCode(),
-                    $statusEvent->getLocation()->getPostalCode(),
-                    $statusEvent->getLocation()->getStreetAddress(),
-                ];
-            } else {
-                $deliveryLocation = [];
-            }
-
-            $deliveryLocation = array_filter($deliveryLocation);
-
-            $trackingEvent = $this->trackingEventFactory->create([
-                'deliveryDate' => $statusEvent->getTimeStamp()->format('Y-m-d'),
-                'deliveryTime' => $statusEvent->getTimeStamp()->format('H:i:s'),
-                'deliveryLocation' => implode(' ', $deliveryLocation),
-                'activity' => $statusEvent->getDescription(),
-            ]);
-            $progressDetail[] = $trackingEvent;
-        }
-
-        $physicalAttributes = $trackingInformation->getPhysicalAttributes();
-        if ($physicalAttributes !== null) {
-            $weight = $trackingInformation->getPhysicalAttributes()->getWeight();
-        } else {
-            $weight = null;
-        }
-
-        $trackingStatus = $this->trackingStatusFactory->create([
+        $statusData = [
             'trackingNumber' => $trackingInformation->getId(),
-            'status' => $trackingInformation->getLatestStatus()->getDescription(),
+            'trackSummary' => $trackingInformation->getLatestStatus()->getDescription(),
+            'status' => $trackingInformation->getLatestStatus()->getStatusCode(),
             'weight' => $weight,
-            'deliveryLocation' => implode(' ', $destinationAddress),
-            'signedBy' => $signedBy,
             'progressDetail' => $progressDetail,
-        ]);
+        ];
+
+        // todo(nr): replace by SDK constant
+        if ($trackingInformation->getLatestStatus()->getStatusCode() === 'delivered') {
+            $receiver = $this->mapPerson($trackingInformation->getReceiver());
+            $date = $this->getDateParts($trackingInformation->getLatestStatus()->getTimeStamp());
+            $signee = $trackingInformation->getProofOfDelivery()
+                ? $trackingInformation->getProofOfDelivery()->getSignee()
+                : null;
+            $signedBy = $this->mapPerson($signee);
+
+            $statusData['deliveryLocation'] = implode(' ', $receiver);
+            $statusData['deliveryDate'] = $date['date'];
+            $statusData['deliveryTime'] = $date['time'];
+            $statusData['signedBy'] = implode(' ', $signedBy);
+        }
+
+        $trackingStatus = $this->trackingStatusFactory->create($statusData);
+
+        return $trackingStatus;
+    }
+
+    /**
+     * Create track response with error message.
+     *
+     * @param string $trackingNumber
+     * @param Phrase $message
+     * @return TrackingStatusInterface
+     */
+    public function createErrorResponse(string $trackingNumber, Phrase $message): TrackingStatusInterface
+    {
+        $statusData = [
+            'trackingNumber' => $trackingNumber,
+            'errorMessage' => $message,
+        ];
+
+        $trackingStatus = $this->trackingStatusFactory->create($statusData);
+
         return $trackingStatus;
     }
 }
