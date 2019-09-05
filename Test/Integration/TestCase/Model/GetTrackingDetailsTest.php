@@ -35,6 +35,7 @@ use PHPUnit\Framework\TestCase;
  * @link    https://www.netresearch.de/
  *
  * @magentoAppArea adminhtml
+ * @magentoAppIsolation enabled
  * @magentoDbIsolation enabled
  */
 class GetTrackingDetailsTest extends TestCase
@@ -69,17 +70,6 @@ class GetTrackingDetailsTest extends TestCase
                                    ->getMock();
         $serviceFactoryMock->method('createTrackingService')->willReturn($this->trackingService);
         $this->objectManager->addSharedInstance($serviceFactoryMock, ServiceFactory::class);
-    }
-
-    /**
-     * Reset pipeline for the service factory mock to take effect.
-     */
-    protected function tearDown()
-    {
-        $this->objectManager->removeSharedInstance(SendRequestStage::class);
-        $this->objectManager->removeSharedInstance('Dhl\GroupTracking\Webservice\Pipeline\RequestTracksPipeline\Virtual');
-
-        parent::tearDown();
     }
 
     /**
