@@ -6,6 +6,7 @@ declare(strict_types=1);
 
 namespace Dhl\GroupTracking\Model;
 
+use Dhl\GroupTracking\Api\Data\TrackingErrorInterface;
 use Dhl\GroupTracking\Api\Data\TrackingEventInterface;
 use Dhl\GroupTracking\Api\Data\TrackingStatusInterface;
 use Dhl\GroupTracking\Exception\TrackingException;
@@ -23,6 +24,7 @@ use Magento\Framework\Phrase;
 use Magento\Sales\Api\Data\ShipmentTrackInterface;
 use Magento\Sales\Api\Data\ShipmentTrackInterfaceFactory;
 use Magento\Sales\Model\Order\Shipment\Track;
+use Magento\Shipping\Model\Tracking\Result\AbstractResult;
 use Magento\TestFramework\Helper\Bootstrap;
 use PHPUnit\Framework\TestCase;
 
@@ -206,6 +208,7 @@ class GetTrackingDetailsTest extends TestCase
         $trackingDetails = $trackingInfoProvider->getTrackingDetails($track->getTrackNumber(), $carrierCode);
 
         self::assertInstanceOf(TrackingStatusInterface::class, $trackingDetails);
+        self::assertInstanceOf(AbstractResult::class, $trackingDetails);
 
         $trackResponse = $trackResponses[$track->getTrackNumber()];
         self::assertSame($trackResponse->getId(), $trackingDetails->getTrackingNumber());
@@ -255,7 +258,8 @@ class GetTrackingDetailsTest extends TestCase
         $trackingInfoProvider = $this->objectManager->create(TrackingInfoProvider::class);
         $trackingDetails = $trackingInfoProvider->getTrackingDetails($track->getTrackNumber(), $carrierCode);
 
-        self::assertInstanceOf(TrackingStatusInterface::class, $trackingDetails);
+        self::assertInstanceOf(TrackingErrorInterface::class, $trackingDetails);
+        self::assertInstanceOf(AbstractResult::class, $trackingDetails);
         self::assertSame($track->getTrackNumber(), $trackingDetails->getTrackingNumber());
         self::assertInstanceOf(Phrase::class, $trackingDetails->getErrorMessage());
         self::assertSame(
@@ -290,7 +294,9 @@ class GetTrackingDetailsTest extends TestCase
         $trackingInfoProvider = $this->objectManager->create(TrackingInfoProvider::class);
         $trackingDetails = $trackingInfoProvider->getTrackingDetails($track->getTrackNumber(), $carrierCode);
 
-        self::assertInstanceOf(TrackingStatusInterface::class, $trackingDetails);
+        self::assertInstanceOf(TrackingErrorInterface::class, $trackingDetails);
+        self::assertInstanceOf(AbstractResult::class, $trackingDetails);
+
         self::assertSame($track->getTrackNumber(), $trackingDetails->getTrackingNumber());
         self::assertInstanceOf(Phrase::class, $trackingDetails->getErrorMessage());
         self::assertStringEndsWith($errorMessage, $trackingDetails->getErrorMessage()->render());
