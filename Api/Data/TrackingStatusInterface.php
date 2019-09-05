@@ -6,8 +6,6 @@ declare(strict_types=1);
 
 namespace Dhl\GroupTracking\Api\Data;
 
-use Magento\Framework\Phrase;
-
 /**
  * Interface TrackingStatusInterface
  *
@@ -46,13 +44,6 @@ interface TrackingStatusInterface
      * @return string
      */
     public function getTrackSummary(): string;
-
-    /**
-     * Obtain tracking error message.
-     *
-     * @return Phrase|null
-     */
-    public function getErrorMessage();
 
     /**
      * Obtain the current delivery status code.

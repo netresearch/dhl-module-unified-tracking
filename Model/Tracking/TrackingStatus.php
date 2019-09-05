@@ -4,11 +4,10 @@
  */
 declare(strict_types=1);
 
-namespace Dhl\GroupTracking\Model;
+namespace Dhl\GroupTracking\Model\Tracking;
 
 use Dhl\GroupTracking\Api\Data\TrackingEventInterface;
 use Dhl\GroupTracking\Api\Data\TrackingStatusInterface;
-use Magento\Framework\Phrase;
 use Magento\Shipping\Model\Tracking\Result\Status;
 
 /**
@@ -81,11 +80,6 @@ class TrackingStatus extends Status implements TrackingStatusInterface
     private $progressDetail;
 
     /**
-     * @var Phrase
-     */
-    private $errorMessage;
-
-    /**
      * TrackingStatus constructor.
      *
      * @param string $trackingNumber
@@ -100,7 +94,6 @@ class TrackingStatus extends Status implements TrackingStatusInterface
      * @param string $deliveryTime
      * @param string $signedBy
      * @param TrackingEventInterface[] $progressDetail
-     * @param Phrase|null $errorMessage
      * @param mixed[] $data
      */
     public function __construct(
@@ -116,7 +109,6 @@ class TrackingStatus extends Status implements TrackingStatusInterface
         string $deliveryTime = '',
         string $signedBy = '',
         array $progressDetail = [],
-        Phrase $errorMessage = null,
         array $data = []
     ) {
         $this->trackingNumber = $trackingNumber;
@@ -131,7 +123,6 @@ class TrackingStatus extends Status implements TrackingStatusInterface
         $this->deliveryTime = $deliveryTime;
         $this->signedBy = $signedBy;
         $this->progressDetail = $progressDetail;
-        $this->errorMessage = $errorMessage;
 
         $data['tracking'] = $trackingNumber;
         $data['url'] = $trackingUrl;
@@ -145,7 +136,6 @@ class TrackingStatus extends Status implements TrackingStatusInterface
         $data['deliverytime'] = $deliveryTime;
         $data['signedby'] = $signedBy;
         $data['progressdetail'] = $progressDetail;
-        $data['error_message'] = $errorMessage;
 
         parent::__construct($data);
     }
@@ -188,16 +178,6 @@ class TrackingStatus extends Status implements TrackingStatusInterface
     public function getTrackSummary(): string
     {
         return $this->trackSummary;
-    }
-
-    /**
-     * Obtain tracking error message.
-     *
-     * @return Phrase|null
-     */
-    public function getErrorMessage()
-    {
-        return $this->errorMessage;
     }
 
     /**

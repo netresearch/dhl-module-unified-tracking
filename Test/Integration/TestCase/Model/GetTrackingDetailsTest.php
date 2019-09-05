@@ -11,7 +11,6 @@ use Dhl\GroupTracking\Api\Data\TrackingStatusInterface;
 use Dhl\GroupTracking\Exception\TrackingException;
 use Dhl\GroupTracking\Test\Integration\Provider\TrackResponseProvider;
 use Dhl\GroupTracking\Test\Integration\TestDouble\TrackingServiceStub;
-use Dhl\GroupTracking\Webservice\Pipeline\Stage\SendRequestStage;
 use Dhl\Sdk\GroupTracking\Api\Data\TrackResponseInterface;
 use Dhl\Sdk\GroupTracking\Exception\ClientException;
 use Dhl\Sdk\GroupTracking\Service\ServiceFactory;
@@ -28,7 +27,7 @@ use Magento\TestFramework\Helper\Bootstrap;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class TrackingInfoProviderTest
+ * Class GetTrackingDetailsTest
  *
  * @package Dhl\GroupTracking\Test\Integration
  * @author  Christoph Aßmann <christoph.assmann@netresearch.de>

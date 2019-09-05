@@ -6,7 +6,7 @@ declare(strict_types=1);
 
 namespace Dhl\GroupTracking\Api;
 
-use Dhl\GroupTracking\Api\Data\TrackingStatusInterface;
+use Magento\Shipping\Model\Tracking\Result\AbstractResult;
 
 /**
  * Interface TrackingInfoProviderInterface
@@ -25,11 +25,11 @@ interface TrackingInfoProviderInterface
      * @param string $trackingId
      * @param string $carrierCode
      * @param string $serviceName
-     * @return TrackingStatusInterface
+     * @return AbstractResult
      */
     public function getTrackingDetails(
         string $trackingId,
         string $carrierCode,
         string $serviceName
-    ): TrackingStatusInterface;
+    ): AbstractResult;
 }

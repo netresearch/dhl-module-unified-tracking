@@ -6,6 +6,7 @@ declare(strict_types=1);
 
 namespace Dhl\GroupTracking\Webservice\Pipeline;
 
+use Dhl\GroupTracking\Api\Data\TrackingErrorInterface;
 use Dhl\GroupTracking\Api\Data\TrackingStatusInterface;
 use Dhl\Sdk\GroupTracking\Api\Data\TrackResponseInterface;
 use Dhl\ShippingCore\Api\Data\Pipeline\ArtifactsContainerInterface;
@@ -46,6 +47,13 @@ class ArtifactsContainer implements ArtifactsContainerInterface
      * @var TrackingStatusInterface[]
      */
     private $trackResponses = [];
+
+    /**
+     * Track errors suitable for processing by the core.
+     *
+     * @var TrackingErrorInterface[]
+     */
+    private $trackErrors = [];
 
     /**
      * Set store id for the pipeline.
@@ -94,6 +102,17 @@ class ArtifactsContainer implements ArtifactsContainerInterface
     }
 
     /**
+     * Add a tracking error response.
+     *
+     * @param string $requestIndex
+     * @param TrackingErrorInterface $trackError
+     */
+    public function addTrackError(string $requestIndex, TrackingErrorInterface $trackError)
+    {
+        $this->trackErrors[$requestIndex] = $trackError;
+    }
+
+    /**
      * Get store id for the pipeline.
      *
      * @return int
@@ -131,5 +150,15 @@ class ArtifactsContainer implements ArtifactsContainerInterface
     public function getTrackResponses(): array
     {
         return $this->trackResponses;
+    }
+
+    /**
+     * Obtain the tracking errors.
+     *
+     * @return TrackingErrorInterface[]
+     */
+    public function getTrackErrors(): array
+    {
+        return $this->trackErrors;
     }
 }

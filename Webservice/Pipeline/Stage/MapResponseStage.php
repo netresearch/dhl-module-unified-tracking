@@ -56,7 +56,7 @@ class MapResponseStage implements RequestTracksStageInterface
                 $errorMessage = $errors[$trackingNumber];
                 $error = __('An error occurred while retrieving tracking details for tracking number %1: %2', $trackingNumber, $errorMessage);
                 $trackingStatus = $this->responseDataMapper->createErrorResponse($trackingNumber, $error);
-                $artifactsContainer->addTrackResponse($trackingNumber, $trackingStatus);
+                $artifactsContainer->addTrackError($trackingNumber, $trackingStatus);
             } elseif (array_key_exists($trackingNumber, $responses)) {
                 // web service returned a match with the response
                 $track = $responses[$trackingNumber];
@@ -66,7 +66,7 @@ class MapResponseStage implements RequestTracksStageInterface
                 // web service returned no match with the response
                 $error = __('No tracking details found for tracking number %1.', $trackingNumber);
                 $trackingStatus = $this->responseDataMapper->createErrorResponse($trackingNumber, $error);
-                $artifactsContainer->addTrackResponse($trackingNumber, $trackingStatus);
+                $artifactsContainer->addTrackError($trackingNumber, $trackingStatus);
             }
         }
 

@@ -6,12 +6,14 @@ declare(strict_types=1);
 
 namespace Dhl\GroupTracking\Model;
 
+use Dhl\GroupTracking\Api\Data\TrackingErrorInterface;
 use Dhl\GroupTracking\Api\Data\TrackingStatusInterface;
 use Dhl\GroupTracking\Api\TrackingInfoProviderInterface;
 use Dhl\GroupTracking\Exception\TrackingException;
 use Dhl\GroupTracking\Webservice\Pipeline\ArtifactsContainer;
 use Dhl\ShippingCore\Api\Pipeline\RequestTracksPipelineInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Shipping\Model\Tracking\Result\AbstractResult;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -61,14 +63,14 @@ class TrackingInfoProvider implements TrackingInfoProviderInterface
      * @param string $trackingId
      * @param string $carrierCode
      * @param string $serviceName
-     * @return TrackingStatusInterface
+     * @return AbstractResult|TrackingStatusInterface|TrackingErrorInterface
      * @throws TrackingException
      */
     public function getTrackingDetails(
         string $trackingId,
         string $carrierCode,
         string $serviceName
-    ): TrackingStatusInterface {
+    ): AbstractResult {
         try {
             $this->trackRequestBuilder->setTrackingNumber($trackingId);
             $this->trackRequestBuilder->setCarrierCode($carrierCode);
@@ -81,7 +83,8 @@ class TrackingInfoProvider implements TrackingInfoProviderInterface
         /** @var ArtifactsContainer $artifactsContainer */
         $artifactsContainer = $this->trackingPipeline->run($trackRequest->getStoreId(), [$trackRequest]);
         $trackResponses = $artifactsContainer->getTrackResponses();
+        $trackErrors = $artifactsContainer->getTrackErrors();
 
-        return $trackResponses[$trackingId];
+        return $trackErrors[$trackingId] ?? $trackResponses[$trackingId];
     }
 }

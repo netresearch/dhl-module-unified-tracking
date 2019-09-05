@@ -8,6 +8,8 @@ namespace Dhl\GroupTracking\Webservice\Pipeline;
 
 use Dhl\GroupTracking\Api\Data\TrackingEventInterface;
 use Dhl\GroupTracking\Api\Data\TrackingEventInterfaceFactory;
+use Dhl\GroupTracking\Api\Data\TrackingErrorInterface;
+use Dhl\GroupTracking\Api\Data\TrackingErrorInterfaceFactory;
 use Dhl\GroupTracking\Api\Data\TrackingStatusInterface;
 use Dhl\GroupTracking\Api\Data\TrackingStatusInterfaceFactory;
 use Dhl\Sdk\GroupTracking\Api\Data\AddressInterface;
@@ -32,9 +34,9 @@ class ResponseDataMapper
     private $date;
 
     /**
-     * @var TrackingStatusInterfaceFactory
+     * @var TrackingErrorInterfaceFactory
      */
-    private $trackingStatusFactory;
+    private $trackingErrorFactory;
 
     /**
      * @var TrackingEventInterfaceFactory
@@ -42,20 +44,28 @@ class ResponseDataMapper
     private $trackingEventFactory;
 
     /**
+     * @var TrackingStatusInterfaceFactory
+     */
+    private $trackingStatusFactory;
+
+    /**
      * MapResponseStage constructor.
      *
      * @param TimezoneInterface $date
-     * @param TrackingStatusInterfaceFactory $trackingStatusFactory
+     * @param TrackingErrorInterfaceFactory $trackingErrorFactory
      * @param TrackingEventInterfaceFactory $trackingEventFactory
+     * @param TrackingStatusInterfaceFactory $trackingStatusFactory
      */
     public function __construct(
         TimezoneInterface $date,
-        TrackingStatusInterfaceFactory $trackingStatusFactory,
-        TrackingEventInterfaceFactory $trackingEventFactory
+        TrackingErrorInterfaceFactory $trackingErrorFactory,
+        TrackingEventInterfaceFactory $trackingEventFactory,
+        TrackingStatusInterfaceFactory $trackingStatusFactory
     ) {
         $this->date = $date;
-        $this->trackingStatusFactory = $trackingStatusFactory;
+        $this->trackingErrorFactory = $trackingErrorFactory;
         $this->trackingEventFactory = $trackingEventFactory;
+        $this->trackingStatusFactory = $trackingStatusFactory;
     }
 
     /**
@@ -195,16 +205,16 @@ class ResponseDataMapper
      *
      * @param string $trackingNumber
      * @param Phrase $message
-     * @return TrackingStatusInterface
+     * @return TrackingErrorInterface
      */
-    public function createErrorResponse(string $trackingNumber, Phrase $message): TrackingStatusInterface
+    public function createErrorResponse(string $trackingNumber, Phrase $message): TrackingErrorInterface
     {
         $statusData = [
             'trackingNumber' => $trackingNumber,
             'errorMessage' => $message,
         ];
 
-        $trackingStatus = $this->trackingStatusFactory->create($statusData);
+        $trackingStatus = $this->trackingErrorFactory->create($statusData);
 
         return $trackingStatus;
     }

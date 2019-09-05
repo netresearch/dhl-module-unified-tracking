@@ -4,7 +4,7 @@
  */
 declare(strict_types=1);
 
-namespace Dhl\GroupTracking\Model;
+namespace Dhl\GroupTracking\Model\Tracking;
 
 use Dhl\GroupTracking\Api\Data\TrackingEventInterface;
 use Magento\Framework\DataObject;

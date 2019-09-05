@@ -7,8 +7,9 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     <!-- # interface preferences -->
     <preference for="Dhl\GroupTracking\Api\TrackingInfoProviderInterface" type="Dhl\GroupTracking\Model\TrackingInfoProvider"/>
-    <preference for="Dhl\GroupTracking\Api\Data\TrackingEventInterface" type="Dhl\GroupTracking\Model\TrackingEvent"/>
-    <preference for="Dhl\GroupTracking\Api\Data\TrackingStatusInterface" type="Dhl\GroupTracking\Model\TrackingStatus"/>
+    <preference for="Dhl\GroupTracking\Api\Data\TrackingErrorInterface" type="Dhl\GroupTracking\Model\Tracking\TrackingError"/>
+    <preference for="Dhl\GroupTracking\Api\Data\TrackingEventInterface" type="Dhl\GroupTracking\Model\Tracking\TrackingEvent"/>
+    <preference for="Dhl\GroupTracking\Api\Data\TrackingStatusInterface" type="Dhl\GroupTracking\Model\Tracking\TrackingStatus"/>
 
     <!-- # sdk preferences -->
     <preference for="Dhl\Sdk\GroupTracking\Api\ServiceFactoryInterface" type="Dhl\Sdk\GroupTracking\Service\ServiceFactory"/>
@@ -33,6 +34,11 @@
     <type name="Dhl\GroupTracking\Model\TrackingInfoProvider">
         <arguments>
             <argument name="trackingPipeline" xsi:type="object">Dhl\GroupTracking\Webservice\Pipeline\RequestTracksPipeline\Virtual</argument>
+        </arguments>
+    </type>
+    <type name="Dhl\GroupTracking\Plugin\Carrier\GetTrackingDetails">
+        <arguments>
+            <argument name="trackingInfoProvider" xsi:type="object">Dhl\GroupTracking\Model\TrackingInfoProvider\Proxy</argument>
         </arguments>
     </type>
 </config>
