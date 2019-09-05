@@ -175,7 +175,7 @@ class GetTrackingDetailsTest extends TestCase
 
         /** @var TrackingInfoProvider $trackingInfoProvider */
         $trackingInfoProvider = $this->objectManager->create(TrackingInfoProvider::class);
-        $trackingInfoProvider->getTrackingDetails($trackingNumber, $carrierCode, '');
+        $trackingInfoProvider->getTrackingDetails($trackingNumber, $carrierCode);
     }
 
     /**
@@ -203,7 +203,7 @@ class GetTrackingDetailsTest extends TestCase
 
         /** @var TrackingInfoProvider $trackingInfoProvider */
         $trackingInfoProvider = $this->objectManager->create(TrackingInfoProvider::class);
-        $trackingDetails = $trackingInfoProvider->getTrackingDetails($track->getTrackNumber(), $carrierCode, '');
+        $trackingDetails = $trackingInfoProvider->getTrackingDetails($track->getTrackNumber(), $carrierCode);
 
         self::assertInstanceOf(TrackingStatusInterface::class, $trackingDetails);
 
@@ -253,7 +253,7 @@ class GetTrackingDetailsTest extends TestCase
 
         /** @var TrackingInfoProvider $trackingInfoProvider */
         $trackingInfoProvider = $this->objectManager->create(TrackingInfoProvider::class);
-        $trackingDetails = $trackingInfoProvider->getTrackingDetails($track->getTrackNumber(), $carrierCode, '');
+        $trackingDetails = $trackingInfoProvider->getTrackingDetails($track->getTrackNumber(), $carrierCode);
 
         self::assertInstanceOf(TrackingStatusInterface::class, $trackingDetails);
         self::assertSame($track->getTrackNumber(), $trackingDetails->getTrackingNumber());
@@ -288,7 +288,7 @@ class GetTrackingDetailsTest extends TestCase
 
         /** @var TrackingInfoProvider $trackingInfoProvider */
         $trackingInfoProvider = $this->objectManager->create(TrackingInfoProvider::class);
-        $trackingDetails = $trackingInfoProvider->getTrackingDetails($track->getTrackNumber(), $carrierCode, '');
+        $trackingDetails = $trackingInfoProvider->getTrackingDetails($track->getTrackNumber(), $carrierCode);
 
         self::assertInstanceOf(TrackingStatusInterface::class, $trackingDetails);
         self::assertSame($track->getTrackNumber(), $trackingDetails->getTrackingNumber());

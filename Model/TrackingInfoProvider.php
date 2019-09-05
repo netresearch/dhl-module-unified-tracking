@@ -62,14 +62,12 @@ class TrackingInfoProvider implements TrackingInfoProviderInterface
      *
      * @param string $trackingId
      * @param string $carrierCode
-     * @param string $serviceName
      * @return AbstractResult|TrackingStatusInterface|TrackingErrorInterface
      * @throws TrackingException
      */
     public function getTrackingDetails(
         string $trackingId,
-        string $carrierCode,
-        string $serviceName
+        string $carrierCode
     ): AbstractResult {
         try {
             $this->trackRequestBuilder->setTrackingNumber($trackingId);

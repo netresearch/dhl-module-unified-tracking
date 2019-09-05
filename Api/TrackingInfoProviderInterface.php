@@ -24,12 +24,10 @@ interface TrackingInfoProviderInterface
      *
      * @param string $trackingId
      * @param string $carrierCode
-     * @param string $serviceName
      * @return AbstractResult
      */
     public function getTrackingDetails(
         string $trackingId,
-        string $carrierCode,
-        string $serviceName
+        string $carrierCode
     ): AbstractResult;
 }

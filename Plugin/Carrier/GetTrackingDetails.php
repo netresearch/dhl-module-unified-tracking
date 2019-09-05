@@ -61,7 +61,7 @@ class GetTrackingDetails
 
         try {
             /** @var TrackingStatus $details */
-            return $this->trackingInfoProvider->getTrackingDetails($trackingNumber, $carrier->getCarrierCode(), '');
+            return $this->trackingInfoProvider->getTrackingDetails($trackingNumber, $carrier->getCarrierCode());
         } catch (TrackingException $exception) {
             $this->logger->error($exception->getMessage(), ['exception' => $exception]);
             return false;
