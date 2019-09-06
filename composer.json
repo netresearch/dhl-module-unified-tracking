@@ -29,5 +29,10 @@
   "require-dev": {
     "dhl/module-shipping-core": "^0.5.0",
     "phpunit/phpunit": "~6.2.0"
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
   }
 }
