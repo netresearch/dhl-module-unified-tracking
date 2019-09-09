@@ -4,15 +4,15 @@
  */
 declare(strict_types=1);
 
-namespace Dhl\GroupTracking\Model\Tracking;
+namespace Dhl\UnifiedTracking\Model\Tracking;
 
-use Dhl\GroupTracking\Api\Data\TrackingEventInterface;
+use Dhl\UnifiedTracking\Api\Data\TrackingEventInterface;
 use Magento\Framework\DataObject;
 
 /**
  * Class TrackingEvent
  *
- * @package Dhl\GroupTracking\Model
+ * @package Dhl\UnifiedTracking\Model
  * @author  Muhammad Qasim <muhammad.qasim@netresearch.de>
  * @link    https://www.netresearch.de/
  */

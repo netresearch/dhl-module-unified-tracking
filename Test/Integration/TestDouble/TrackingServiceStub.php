@@ -4,16 +4,16 @@
  */
 declare(strict_types=1);
 
-namespace Dhl\GroupTracking\Test\Integration\TestDouble;
+namespace Dhl\UnifiedTracking\Test\Integration\TestDouble;
 
-use Dhl\Sdk\GroupTracking\Api\Data\TrackResponseInterface;
-use Dhl\Sdk\GroupTracking\Api\TrackingServiceInterface;
-use Dhl\Sdk\GroupTracking\Exception\ServiceException;
+use Dhl\Sdk\UnifiedTracking\Api\Data\TrackResponseInterface;
+use Dhl\Sdk\UnifiedTracking\Api\TrackingServiceInterface;
+use Dhl\Sdk\UnifiedTracking\Exception\ServiceException;
 
 /**
  * Class TrackingServiceStub
  *
- * @package Dhl\GroupTracking\Test\Integration\TestDouble
+ * @package Dhl\UnifiedTracking\Test\Integration\TestDouble
  * @author Christoph Aßmann <christoph.assmann@netresearch.de>
  * @link https://www.netresearch.de/
  */

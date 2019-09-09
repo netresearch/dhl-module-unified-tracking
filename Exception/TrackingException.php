@@ -4,7 +4,7 @@
  */
 declare(strict_types=1);
 
-namespace Dhl\GroupTracking\Exception;
+namespace Dhl\UnifiedTracking\Exception;
 
 use Magento\Framework\Exception\LocalizedException;
 
@@ -12,7 +12,7 @@ use Magento\Framework\Exception\LocalizedException;
  * Class TrackingException
  *
  * @api
- * @package Dhl\GroupTracking\Exception
+ * @package Dhl\UnifiedTracking\Exception
  * @author  Muhammad Qasim <muhammad.qasim@netresearch.de>
  * @link    https://www.netresearch.de/
  */

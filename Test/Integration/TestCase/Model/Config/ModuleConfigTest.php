@@ -4,7 +4,7 @@
  */
 declare(strict_types=1);
 
-namespace Dhl\GroupTracking\Model\Config;
+namespace Dhl\UnifiedTracking\Model\Config;
 
 use Magento\TestFramework\ObjectManager;
 use PHPUnit\Framework\TestCase;
@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * Class ModuleConfigTest
  *
- * @package Dhl\GroupTracking\Test\Integration
+ * @package Dhl\UnifiedTracking\Test\Integration
  * @author Muhammad Qasim <muhammad.qasim@netresearch.de>
  * @link   https://www.netresearch.de/
  *

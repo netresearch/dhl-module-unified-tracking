@@ -4,16 +4,16 @@
  */
 declare(strict_types=1);
 
-namespace Dhl\GroupTracking\Model\Tracking;
+namespace Dhl\UnifiedTracking\Model\Tracking;
 
-use Dhl\GroupTracking\Api\Data\TrackingEventInterface;
-use Dhl\GroupTracking\Api\Data\TrackingStatusInterface;
+use Dhl\UnifiedTracking\Api\Data\TrackingEventInterface;
+use Dhl\UnifiedTracking\Api\Data\TrackingStatusInterface;
 use Magento\Shipping\Model\Tracking\Result\Status;
 
 /**
  * Class TrackingStatus
  *
- * @package Dhl\GroupTracking\Model
+ * @package Dhl\UnifiedTracking\Model
  * @author  Muhammad Qasim <muhammad.qasim@netresearch.de>
  * @link    https://www.netresearch.de/
  */

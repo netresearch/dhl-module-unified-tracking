@@ -4,20 +4,20 @@
  */
 declare(strict_types=1);
 
-namespace Dhl\GroupTracking\Test\Integration\Provider;
+namespace Dhl\UnifiedTracking\Test\Integration\Provider;
 
-use Dhl\Sdk\GroupTracking\Api\Data\TrackResponseInterface;
-use Dhl\Sdk\GroupTracking\Model\Tracking\Response\Address;
-use Dhl\Sdk\GroupTracking\Model\Tracking\Response\EstimatedDelivery;
-use Dhl\Sdk\GroupTracking\Model\Tracking\Response\Person;
-use Dhl\Sdk\GroupTracking\Model\Tracking\Response\PhysicalAttributes;
-use Dhl\Sdk\GroupTracking\Model\Tracking\Response\ShipmentEvent;
-use Dhl\Sdk\GroupTracking\Model\Tracking\TrackResponse;
+use Dhl\Sdk\UnifiedTracking\Api\Data\TrackResponseInterface;
+use Dhl\Sdk\UnifiedTracking\Model\Tracking\Response\Address;
+use Dhl\Sdk\UnifiedTracking\Model\Tracking\Response\EstimatedDelivery;
+use Dhl\Sdk\UnifiedTracking\Model\Tracking\Response\Person;
+use Dhl\Sdk\UnifiedTracking\Model\Tracking\Response\PhysicalAttributes;
+use Dhl\Sdk\UnifiedTracking\Model\Tracking\Response\ShipmentEvent;
+use Dhl\Sdk\UnifiedTracking\Model\Tracking\TrackResponse;
 
 /**
  * Class TrackResponseProvider
  *
- * @package Dhl\GroupTracking\Test\Integration\Provider
+ * @package Dhl\UnifiedTracking\Test\Integration\Provider
  * @author Muhammad Qasim <muhammad.qasim@netresearch.de>
  * @link   https://www.netresearch.de/
  */

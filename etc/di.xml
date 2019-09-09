@@ -6,39 +6,39 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     <!-- # interface preferences -->
-    <preference for="Dhl\GroupTracking\Api\TrackingInfoProviderInterface" type="Dhl\GroupTracking\Model\TrackingInfoProvider"/>
-    <preference for="Dhl\GroupTracking\Api\Data\TrackingErrorInterface" type="Dhl\GroupTracking\Model\Tracking\TrackingError"/>
-    <preference for="Dhl\GroupTracking\Api\Data\TrackingEventInterface" type="Dhl\GroupTracking\Model\Tracking\TrackingEvent"/>
-    <preference for="Dhl\GroupTracking\Api\Data\TrackingStatusInterface" type="Dhl\GroupTracking\Model\Tracking\TrackingStatus"/>
+    <preference for="Dhl\UnifiedTracking\Api\TrackingInfoProviderInterface" type="Dhl\UnifiedTracking\Model\TrackingInfoProvider"/>
+    <preference for="Dhl\UnifiedTracking\Api\Data\TrackingErrorInterface" type="Dhl\UnifiedTracking\Model\Tracking\TrackingError"/>
+    <preference for="Dhl\UnifiedTracking\Api\Data\TrackingEventInterface" type="Dhl\UnifiedTracking\Model\Tracking\TrackingEvent"/>
+    <preference for="Dhl\UnifiedTracking\Api\Data\TrackingStatusInterface" type="Dhl\UnifiedTracking\Model\Tracking\TrackingStatus"/>
 
     <!-- # sdk preferences -->
-    <preference for="Dhl\Sdk\GroupTracking\Api\ServiceFactoryInterface" type="Dhl\Sdk\GroupTracking\Service\ServiceFactory"/>
+    <preference for="Dhl\Sdk\UnifiedTracking\Api\ServiceFactoryInterface" type="Dhl\Sdk\UnifiedTracking\Service\ServiceFactory"/>
 
     <!-- # virtual types -->
-    <virtualType name="Dhl\GroupTracking\Webservice\Pipeline\RequestTracksPipeline\Virtual" type="Dhl\ShippingCore\Webservice\Pipeline\Track\RequestTracksPipeline">
+    <virtualType name="Dhl\UnifiedTracking\Webservice\Pipeline\RequestTracksPipeline\Virtual" type="Dhl\ShippingCore\Webservice\Pipeline\Track\RequestTracksPipeline">
         <arguments>
             <argument name="stages" xsi:type="array">
-                <item name="send" sortOrder="100" xsi:type="object">Dhl\GroupTracking\Webservice\Pipeline\Stage\SendRequestStage</item>
-                <item name="mapResponse" sortOrder="200" xsi:type="object">Dhl\GroupTracking\Webservice\Pipeline\Stage\MapResponseStage</item>
+                <item name="send" sortOrder="100" xsi:type="object">Dhl\UnifiedTracking\Webservice\Pipeline\Stage\SendRequestStage</item>
+                <item name="mapResponse" sortOrder="200" xsi:type="object">Dhl\UnifiedTracking\Webservice\Pipeline\Stage\MapResponseStage</item>
             </argument>
-            <argument name="artifactsContainerFactory" xsi:type="object">Dhl\GroupTracking\Webservice\Pipeline\ArtifactsContainerFactory\Virtual</argument>
+            <argument name="artifactsContainerFactory" xsi:type="object">Dhl\UnifiedTracking\Webservice\Pipeline\ArtifactsContainerFactory\Virtual</argument>
         </arguments>
     </virtualType>
-    <virtualType name="Dhl\GroupTracking\Webservice\Pipeline\ArtifactsContainerFactory\Virtual" type="\Dhl\ShippingCore\Api\Data\Pipeline\ArtifactsContainerInterfaceFactory">
+    <virtualType name="Dhl\UnifiedTracking\Webservice\Pipeline\ArtifactsContainerFactory\Virtual" type="\Dhl\ShippingCore\Api\Data\Pipeline\ArtifactsContainerInterfaceFactory">
         <arguments>
-            <argument name="instanceName" xsi:type="string">Dhl\GroupTracking\Webservice\Pipeline\ArtifactsContainer</argument>
+            <argument name="instanceName" xsi:type="string">Dhl\UnifiedTracking\Webservice\Pipeline\ArtifactsContainer</argument>
         </arguments>
     </virtualType>
 
     <!-- # argument di overrides -->
-    <type name="Dhl\GroupTracking\Model\TrackingInfoProvider">
+    <type name="Dhl\UnifiedTracking\Model\TrackingInfoProvider">
         <arguments>
-            <argument name="trackingPipeline" xsi:type="object">Dhl\GroupTracking\Webservice\Pipeline\RequestTracksPipeline\Virtual</argument>
+            <argument name="trackingPipeline" xsi:type="object">Dhl\UnifiedTracking\Webservice\Pipeline\RequestTracksPipeline\Virtual</argument>
         </arguments>
     </type>
-    <type name="Dhl\GroupTracking\Plugin\Carrier\GetTrackingDetails">
+    <type name="Dhl\UnifiedTracking\Plugin\Carrier\GetTrackingDetails">
         <arguments>
-            <argument name="trackingInfoProvider" xsi:type="object">Dhl\GroupTracking\Model\TrackingInfoProvider\Proxy</argument>
+            <argument name="trackingInfoProvider" xsi:type="object">Dhl\UnifiedTracking\Model\TrackingInfoProvider\Proxy</argument>
         </arguments>
     </type>
 </config>

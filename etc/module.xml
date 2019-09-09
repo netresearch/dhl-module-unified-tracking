@@ -3,7 +3,7 @@
 See LICENSE.md for license details.
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
-    <module name="Dhl_GroupTracking" setup_version="1.0.0">
+    <module name="Dhl_UnifiedTracking" setup_version="1.0.0">
         <sequence/>
     </module>
 </config>

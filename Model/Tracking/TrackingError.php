@@ -4,16 +4,16 @@
  */
 declare(strict_types=1);
 
-namespace Dhl\GroupTracking\Model\Tracking;
+namespace Dhl\UnifiedTracking\Model\Tracking;
 
-use Dhl\GroupTracking\Api\Data\TrackingErrorInterface;
+use Dhl\UnifiedTracking\Api\Data\TrackingErrorInterface;
 use Magento\Framework\Phrase;
 use Magento\Shipping\Model\Tracking\Result\Error;
 
 /**
  * Class TrackingError
  *
- * @package Dhl\GroupTracking\Model
+ * @package Dhl\UnifiedTracking\Model
  * @author  Muhammad Qasim <muhammad.qasim@netresearch.de>
  * @link    https://www.netresearch.de/
  */

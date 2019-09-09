@@ -4,12 +4,12 @@
  */
 declare(strict_types=1);
 
-namespace Dhl\GroupTracking\Webservice\Pipeline\Stage;
+namespace Dhl\UnifiedTracking\Webservice\Pipeline\Stage;
 
-use Dhl\GroupTracking\Model\Config\ModuleConfig;
-use Dhl\GroupTracking\Webservice\Pipeline\ArtifactsContainer;
-use Dhl\Sdk\GroupTracking\Api\ServiceFactoryInterface;
-use Dhl\Sdk\GroupTracking\Exception\ServiceException;
+use Dhl\UnifiedTracking\Model\Config\ModuleConfig;
+use Dhl\UnifiedTracking\Webservice\Pipeline\ArtifactsContainer;
+use Dhl\Sdk\UnifiedTracking\Api\ServiceFactoryInterface;
+use Dhl\Sdk\UnifiedTracking\Exception\ServiceException;
 use Dhl\ShippingCore\Api\Data\Pipeline\ArtifactsContainerInterface;
 use Dhl\ShippingCore\Api\Data\TrackRequest\TrackRequestInterface;
 use Dhl\ShippingCore\Api\Pipeline\RequestTracksStageInterface;
@@ -19,7 +19,7 @@ use Psr\Log\LoggerInterface;
 /**
  * Class SendRequestStage
  *
- * @package Dhl\GroupTracking\Webservice
+ * @package Dhl\UnifiedTracking\Webservice
  * @author  Muhammad Qasim <muhammad.qasim@netresearch.de>
  * @link    https://www.netresearch.de/
  */

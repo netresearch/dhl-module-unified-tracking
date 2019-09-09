@@ -4,7 +4,7 @@
  */
 declare(strict_types=1);
 
-namespace Dhl\GroupTracking\Api\Data;
+namespace Dhl\UnifiedTracking\Api\Data;
 
 use Magento\Framework\Phrase;
 
@@ -13,7 +13,7 @@ use Magento\Framework\Phrase;
  *
  * Error details for a tracking number.
  *
- * @package Dhl\GroupTracking\Api
+ * @package Dhl\UnifiedTracking\Api
  * @author  Muhammad Qasim <muhammad.qasim@netresearch.de>
  * @link    https://www.netresearch.de/
  */

@@ -4,7 +4,7 @@
  */
 declare(strict_types=1);
 
-namespace Dhl\GroupTracking\Model\Config;
+namespace Dhl\UnifiedTracking\Model\Config;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Store\Model\ScopeInterface;
@@ -13,7 +13,7 @@ use Magento\Sales\Model\Order\Shipment;
 /**
  * Class ModuleConfig
  *
- * @package Dhl\GroupTracking\Model
+ * @package Dhl\UnifiedTracking\Model
  * @author Muhammad Qasim <muhammad.qasim@netresearch.de>
  * @link   https://www.netresearch.de/
  */

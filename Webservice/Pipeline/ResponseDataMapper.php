@@ -4,25 +4,25 @@
  */
 declare(strict_types=1);
 
-namespace Dhl\GroupTracking\Webservice\Pipeline;
+namespace Dhl\UnifiedTracking\Webservice\Pipeline;
 
-use Dhl\GroupTracking\Api\Data\TrackingEventInterface;
-use Dhl\GroupTracking\Api\Data\TrackingEventInterfaceFactory;
-use Dhl\GroupTracking\Api\Data\TrackingErrorInterface;
-use Dhl\GroupTracking\Api\Data\TrackingErrorInterfaceFactory;
-use Dhl\GroupTracking\Api\Data\TrackingStatusInterface;
-use Dhl\GroupTracking\Api\Data\TrackingStatusInterfaceFactory;
-use Dhl\Sdk\GroupTracking\Api\Data\AddressInterface;
-use Dhl\Sdk\GroupTracking\Api\Data\PersonInterface;
-use Dhl\Sdk\GroupTracking\Api\Data\ShipmentEventInterface;
-use Dhl\Sdk\GroupTracking\Api\Data\TrackResponseInterface;
+use Dhl\UnifiedTracking\Api\Data\TrackingEventInterface;
+use Dhl\UnifiedTracking\Api\Data\TrackingEventInterfaceFactory;
+use Dhl\UnifiedTracking\Api\Data\TrackingErrorInterface;
+use Dhl\UnifiedTracking\Api\Data\TrackingErrorInterfaceFactory;
+use Dhl\UnifiedTracking\Api\Data\TrackingStatusInterface;
+use Dhl\UnifiedTracking\Api\Data\TrackingStatusInterfaceFactory;
+use Dhl\Sdk\UnifiedTracking\Api\Data\AddressInterface;
+use Dhl\Sdk\UnifiedTracking\Api\Data\PersonInterface;
+use Dhl\Sdk\UnifiedTracking\Api\Data\ShipmentEventInterface;
+use Dhl\Sdk\UnifiedTracking\Api\Data\TrackResponseInterface;
 use Magento\Framework\Phrase;
 use Magento\Framework\Stdlib\DateTime\TimezoneInterface;
 
 /**
  * Class ResponseDataMapper
  *
- * @package Dhl\GroupTracking\Webservice
+ * @package Dhl\UnifiedTracking\Webservice
  * @author  Muhammad Qasim <muhammad.qasim@netresearch.de>
  * @link    https://www.netresearch.de/
  */

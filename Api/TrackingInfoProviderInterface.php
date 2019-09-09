@@ -4,7 +4,7 @@
  */
 declare(strict_types=1);
 
-namespace Dhl\GroupTracking\Api;
+namespace Dhl\UnifiedTracking\Api;
 
 use Magento\Shipping\Model\Tracking\Result\AbstractResult;
 
@@ -13,7 +13,7 @@ use Magento\Shipping\Model\Tracking\Result\AbstractResult;
  *
  * Entry point for retrieving tracking data from the DHL web service.
  *
- * @package Dhl\GroupTracking\Api
+ * @package Dhl\UnifiedTracking\Api
  * @author  Muhammad Qasim <muhammad.qasim@netresearch.de>
  * @link    https://www.netresearch.de/
  */

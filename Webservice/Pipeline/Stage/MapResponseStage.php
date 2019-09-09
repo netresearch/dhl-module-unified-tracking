@@ -4,10 +4,10 @@
  */
 declare(strict_types=1);
 
-namespace Dhl\GroupTracking\Webservice\Pipeline\Stage;
+namespace Dhl\UnifiedTracking\Webservice\Pipeline\Stage;
 
-use Dhl\GroupTracking\Webservice\Pipeline\ArtifactsContainer;
-use Dhl\GroupTracking\Webservice\Pipeline\ResponseDataMapper;
+use Dhl\UnifiedTracking\Webservice\Pipeline\ArtifactsContainer;
+use Dhl\UnifiedTracking\Webservice\Pipeline\ResponseDataMapper;
 use Dhl\ShippingCore\Api\Data\Pipeline\ArtifactsContainerInterface;
 use Dhl\ShippingCore\Api\Data\TrackRequest\TrackRequestInterface;
 use Dhl\ShippingCore\Api\Pipeline\RequestTracksStageInterface;
@@ -15,7 +15,7 @@ use Dhl\ShippingCore\Api\Pipeline\RequestTracksStageInterface;
 /**
  * Class MapResponseStage
  *
- * @package Dhl\GroupTracking\Webservice
+ * @package Dhl\UnifiedTracking\Webservice
  * @author  Muhammad Qasim <muhammad.qasim@netresearch.de>
  * @link    https://www.netresearch.de/
  */

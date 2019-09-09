@@ -4,14 +4,14 @@
  */
 declare(strict_types=1);
 
-namespace Dhl\GroupTracking\Api\Data;
+namespace Dhl\UnifiedTracking\Api\Data;
 
 /**
  * Interface TrackingEventInterface
  *
  * Details for a tracking event.
  *
- * @package Dhl\GroupTracking\Api
+ * @package Dhl\UnifiedTracking\Api
  * @author  Muhammad Qasim <muhammad.qasim@netresearch.de>
  * @link    https://www.netresearch.de/
  */

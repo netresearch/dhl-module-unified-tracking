@@ -29,7 +29,7 @@ Install sources:
 
 Enable module:
 
-    ./bin/magento module:enable Dhl_GroupTracking
+    ./bin/magento module:enable Dhl_UnifiedTracking
     ./bin/magento setup:upgrade
 
 Flush cache and compile:
@@ -41,7 +41,7 @@ Flush cache and compile:
 
 To unregister the tracking module from the application, run the following command:
 
-    ./bin/magento module:uninstall Dhl_GroupTracking
+    ./bin/magento module:uninstall Dhl_UnifiedTracking
     composer update
 
 ## Usage
@@ -58,7 +58,7 @@ original `\Magento\Shipping\Model\Carrier\AbstractCarrierOnline::getTrackingInfo
 
 ```xml
 <type name="Vendor\Module\Model\Carrier">
-    <plugin name="dhlgw_get_tracking_info" type="Dhl\GroupTracking\Plugin\Carrier\GetTrackingDetails"/>
+    <plugin name="dhlgw_get_tracking_info" type="Dhl\UnifiedTracking\Plugin\Carrier\GetTrackingDetails"/>
 </type>
 ```
 
@@ -68,7 +68,7 @@ return a result object ready to be processed by the `Magento_Shipping` core modu
 ### Tracking Service
 
 The tracking extension offers an integration point that can be used to request
-tracking details from the web service: `\Dhl\GroupTracking\Api\TrackingInfoProviderInterface::getTrackingDetails`.
+tracking details from the web service: `\Dhl\UnifiedTracking\Api\TrackingInfoProviderInterface::getTrackingDetails`.
 
 Using the tracking service directly can be useful if the result needs to be modified
 before passing it to the `Magento_Shipping` core module.
@@ -101,7 +101,7 @@ If the integration is only meant to request tracking details from a certain carr
 a service name via DI configuration:
 
 ```xml
-<type name="Dhl\GroupTracking\Webservice\Pipeline\Stage\SendRequestStage">
+<type name="Dhl\UnifiedTracking\Webservice\Pipeline\Stage\SendRequestStage">
     <arguments>
         <argument name="serviceNames" xsi:type="array">
             <item name="fooCarrierCode" xsi:type="string">foo-service</item>

@@ -4,13 +4,13 @@
  */
 declare(strict_types=1);
 
-namespace Dhl\GroupTracking\Model;
+namespace Dhl\UnifiedTracking\Model;
 
-use Dhl\GroupTracking\Api\Data\TrackingErrorInterface;
-use Dhl\GroupTracking\Api\Data\TrackingStatusInterface;
-use Dhl\GroupTracking\Api\TrackingInfoProviderInterface;
-use Dhl\GroupTracking\Exception\TrackingException;
-use Dhl\GroupTracking\Webservice\Pipeline\ArtifactsContainer;
+use Dhl\UnifiedTracking\Api\Data\TrackingErrorInterface;
+use Dhl\UnifiedTracking\Api\Data\TrackingStatusInterface;
+use Dhl\UnifiedTracking\Api\TrackingInfoProviderInterface;
+use Dhl\UnifiedTracking\Exception\TrackingException;
+use Dhl\UnifiedTracking\Webservice\Pipeline\ArtifactsContainer;
 use Dhl\ShippingCore\Api\Pipeline\RequestTracksPipelineInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Shipping\Model\Tracking\Result\AbstractResult;
@@ -19,7 +19,7 @@ use Psr\Log\LoggerInterface;
 /**
  * Class TrackingInfoProvider
  *
- * @package Dhl\GroupTracking\Model
+ * @package Dhl\UnifiedTracking\Model
  * @author  Muhammad Qasim <muhammad.qasim@netresearch.de>
  * @link    https://www.netresearch.de/
  */

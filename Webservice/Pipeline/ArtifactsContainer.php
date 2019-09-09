@@ -4,17 +4,17 @@
  */
 declare(strict_types=1);
 
-namespace Dhl\GroupTracking\Webservice\Pipeline;
+namespace Dhl\UnifiedTracking\Webservice\Pipeline;
 
-use Dhl\GroupTracking\Api\Data\TrackingErrorInterface;
-use Dhl\GroupTracking\Api\Data\TrackingStatusInterface;
-use Dhl\Sdk\GroupTracking\Api\Data\TrackResponseInterface;
+use Dhl\UnifiedTracking\Api\Data\TrackingErrorInterface;
+use Dhl\UnifiedTracking\Api\Data\TrackingStatusInterface;
+use Dhl\Sdk\UnifiedTracking\Api\Data\TrackResponseInterface;
 use Dhl\ShippingCore\Api\Data\Pipeline\ArtifactsContainerInterface;
 
 /**
  * Class ArtifactsContainer
  *
- * @package Dhl\GroupTracking\Webservice
+ * @package Dhl\UnifiedTracking\Webservice
  * @author  Christoph Aßmann <christoph.assmann@netresearch.de>
  * @link    https://www.netresearch.de/
  */

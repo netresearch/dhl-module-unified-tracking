@@ -4,7 +4,7 @@
  */
 declare(strict_types=1);
 
-namespace Dhl\GroupTracking\Model;
+namespace Dhl\UnifiedTracking\Model;
 
 use Dhl\ShippingCore\Api\Data\TrackRequest\TrackRequestInterface;
 use Dhl\ShippingCore\Api\Data\TrackRequest\TrackRequestInterfaceFactory;
@@ -19,7 +19,7 @@ use Magento\Sales\Model\Order\ShipmentRepository;
 /**
  * Class TrackRequestBuilder
  *
- * @package Dhl\GroupTracking\Model
+ * @package Dhl\UnifiedTracking\Model
  * @author  Muhammad Qasim <muhammad.qasim@netresearch.de>
  * @link    https://www.netresearch.de/
  */

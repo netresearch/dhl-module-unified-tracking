@@ -4,11 +4,11 @@
  */
 declare(strict_types=1);
 
-namespace Dhl\GroupTracking\Plugin\Carrier;
+namespace Dhl\UnifiedTracking\Plugin\Carrier;
 
-use Dhl\GroupTracking\Exception\TrackingException;
-use Dhl\GroupTracking\Model\Tracking\TrackingStatus;
-use Dhl\GroupTracking\Model\TrackingInfoProvider;
+use Dhl\UnifiedTracking\Exception\TrackingException;
+use Dhl\UnifiedTracking\Model\Tracking\TrackingStatus;
+use Dhl\UnifiedTracking\Model\TrackingInfoProvider;
 use Magento\Shipping\Model\Carrier\AbstractCarrierOnline;
 use Magento\Shipping\Model\Tracking\Result\AbstractResult;
 use Psr\Log\LoggerInterface;
@@ -16,7 +16,7 @@ use Psr\Log\LoggerInterface;
 /**
  * Class GetTrackingDetails
  *
- * @package Dhl\GroupTracking\Plugin
+ * @package Dhl\UnifiedTracking\Plugin
  * @author  Christoph Aßmann <christoph.assmann@netresearch.de>
  * @link    https://www.netresearch.de/
  */

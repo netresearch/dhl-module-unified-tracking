@@ -4,17 +4,17 @@
  */
 declare(strict_types=1);
 
-namespace Dhl\GroupTracking\Model;
+namespace Dhl\UnifiedTracking\Model;
 
-use Dhl\GroupTracking\Api\Data\TrackingErrorInterface;
-use Dhl\GroupTracking\Api\Data\TrackingEventInterface;
-use Dhl\GroupTracking\Api\Data\TrackingStatusInterface;
-use Dhl\GroupTracking\Exception\TrackingException;
-use Dhl\GroupTracking\Test\Integration\Provider\TrackResponseProvider;
-use Dhl\GroupTracking\Test\Integration\TestDouble\TrackingServiceStub;
-use Dhl\Sdk\GroupTracking\Api\Data\TrackResponseInterface;
-use Dhl\Sdk\GroupTracking\Exception\ClientException;
-use Dhl\Sdk\GroupTracking\Service\ServiceFactory;
+use Dhl\UnifiedTracking\Api\Data\TrackingErrorInterface;
+use Dhl\UnifiedTracking\Api\Data\TrackingEventInterface;
+use Dhl\UnifiedTracking\Api\Data\TrackingStatusInterface;
+use Dhl\UnifiedTracking\Exception\TrackingException;
+use Dhl\UnifiedTracking\Test\Integration\Provider\TrackResponseProvider;
+use Dhl\UnifiedTracking\Test\Integration\TestDouble\TrackingServiceStub;
+use Dhl\Sdk\UnifiedTracking\Api\Data\TrackResponseInterface;
+use Dhl\Sdk\UnifiedTracking\Exception\ClientException;
+use Dhl\Sdk\UnifiedTracking\Service\ServiceFactory;
 use Dhl\ShippingCore\Test\Integration\Fixture\Data\AddressDe;
 use Dhl\ShippingCore\Test\Integration\Fixture\Data\SimpleProduct;
 use Dhl\ShippingCore\Test\Integration\Fixture\Data\SimpleProduct2;
@@ -31,7 +31,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * Class GetTrackingDetailsTest
  *
- * @package Dhl\GroupTracking\Test\Integration
+ * @package Dhl\UnifiedTracking\Test\Integration
  * @author  Christoph Aßmann <christoph.assmann@netresearch.de>
  * @link    https://www.netresearch.de/
  *
