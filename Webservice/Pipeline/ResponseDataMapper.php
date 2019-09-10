@@ -6,18 +6,17 @@ declare(strict_types=1);
 
 namespace Dhl\UnifiedTracking\Webservice\Pipeline;
 
-use Dhl\UnifiedTracking\Api\Data\TrackingEventInterface;
-use Dhl\UnifiedTracking\Api\Data\TrackingEventInterfaceFactory;
-use Dhl\UnifiedTracking\Api\Data\TrackingErrorInterface;
-use Dhl\UnifiedTracking\Api\Data\TrackingErrorInterfaceFactory;
-use Dhl\UnifiedTracking\Api\Data\TrackingStatusInterface;
-use Dhl\UnifiedTracking\Api\Data\TrackingStatusInterfaceFactory;
 use Dhl\Sdk\UnifiedTracking\Api\Data\AddressInterface;
 use Dhl\Sdk\UnifiedTracking\Api\Data\PersonInterface;
 use Dhl\Sdk\UnifiedTracking\Api\Data\ShipmentEventInterface;
 use Dhl\Sdk\UnifiedTracking\Api\Data\TrackResponseInterface;
+use Dhl\UnifiedTracking\Api\Data\TrackingErrorInterface;
+use Dhl\UnifiedTracking\Api\Data\TrackingErrorInterfaceFactory;
+use Dhl\UnifiedTracking\Api\Data\TrackingEventInterface;
+use Dhl\UnifiedTracking\Api\Data\TrackingEventInterfaceFactory;
+use Dhl\UnifiedTracking\Api\Data\TrackingStatusInterface;
+use Dhl\UnifiedTracking\Api\Data\TrackingStatusInterfaceFactory;
 use Magento\Framework\Phrase;
-use Magento\Framework\Stdlib\DateTime\TimezoneInterface;
 
 /**
  * Class ResponseDataMapper
@@ -28,11 +27,6 @@ use Magento\Framework\Stdlib\DateTime\TimezoneInterface;
  */
 class ResponseDataMapper
 {
-    /**
-     * @var TimezoneInterface
-     */
-    private $date;
-
     /**
      * @var TrackingErrorInterfaceFactory
      */
@@ -51,18 +45,15 @@ class ResponseDataMapper
     /**
      * MapResponseStage constructor.
      *
-     * @param TimezoneInterface $date
      * @param TrackingErrorInterfaceFactory $trackingErrorFactory
      * @param TrackingEventInterfaceFactory $trackingEventFactory
      * @param TrackingStatusInterfaceFactory $trackingStatusFactory
      */
     public function __construct(
-        TimezoneInterface $date,
         TrackingErrorInterfaceFactory $trackingErrorFactory,
         TrackingEventInterfaceFactory $trackingEventFactory,
         TrackingStatusInterfaceFactory $trackingStatusFactory
     ) {
-        $this->date = $date;
         $this->trackingErrorFactory = $trackingErrorFactory;
         $this->trackingEventFactory = $trackingEventFactory;
         $this->trackingStatusFactory = $trackingStatusFactory;
@@ -71,25 +62,14 @@ class ResponseDataMapper
     /**
      * Extract localized date and time parts from \DateTime object.
      *
-     * The date needs to be formatted according to the current scope (admin or store front). Note that `scopeDate`
-     * does not accept a \DateTime object.
-     *
-     * @see \Magento\Framework\Stdlib\DateTime\TimezoneInterface::scopeDate
-     * @link https://github.com/magento/magento2/issues/23359
-     *
      * @param \DateTime $dateTime
      * @return string[]
      */
-    private function getDateParts(\DateTime $dateTime)
+    private function getDateParts(\DateTime $dateTime): array
     {
-        $scopeDate = $this->date->scopeDate(null, $dateTime->getTimestamp());
-        $date = $this->date->formatDate($scopeDate);
-        $fullDate = $this->date->formatDate($scopeDate, \IntlDateFormatter::SHORT, true);
-        $time = trim(str_replace($date, '', $fullDate), ' ,');
-
         return [
-            'date' => $date,
-            'time' => $time,
+            'date' => $dateTime->format('Y-m-d'),
+            'time' => $dateTime->format('H:i:s'),
         ];
     }
 
@@ -172,18 +152,18 @@ class ResponseDataMapper
             $trackingInformation->getStatusEvents()
         );
 
+        $latestStatus = $trackingInformation->getLatestStatus();
         $statusData = [
-            'trackingNumber' => $trackingInformation->getId(),
-            'trackSummary' => $trackingInformation->getLatestStatus()->getDescription(),
-            'status' => $trackingInformation->getLatestStatus()->getStatusCode(),
+            'trackingNumber' => $trackingInformation->getTrackingId(),
+            'trackSummary' => $latestStatus->getDescription(),
+            'status' => $latestStatus->getStatusCode(),
             'weight' => $weight,
             'progressDetail' => $progressDetail,
         ];
 
-        // todo(nr): replace by SDK constant
-        if ($trackingInformation->getLatestStatus()->getStatusCode() === 'delivered') {
+        if ($latestStatus->getStatusCode() === ShipmentEventInterface::STATUS_CODE_DELIVERED) {
             $receiver = $this->mapPerson($trackingInformation->getReceiver());
-            $date = $this->getDateParts($trackingInformation->getLatestStatus()->getTimeStamp());
+            $date = $this->getDateParts($latestStatus->getTimeStamp());
             $signee = $trackingInformation->getProofOfDelivery()
                 ? $trackingInformation->getProofOfDelivery()->getSignee()
                 : null;

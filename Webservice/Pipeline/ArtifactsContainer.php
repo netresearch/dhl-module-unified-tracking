@@ -6,10 +6,10 @@ declare(strict_types=1);
 
 namespace Dhl\UnifiedTracking\Webservice\Pipeline;
 
-use Dhl\UnifiedTracking\Api\Data\TrackingErrorInterface;
-use Dhl\UnifiedTracking\Api\Data\TrackingStatusInterface;
 use Dhl\Sdk\UnifiedTracking\Api\Data\TrackResponseInterface;
 use Dhl\ShippingCore\Api\Data\Pipeline\ArtifactsContainerInterface;
+use Dhl\UnifiedTracking\Api\Data\TrackingErrorInterface;
+use Dhl\UnifiedTracking\Api\Data\TrackingStatusInterface;
 
 /**
  * Class ArtifactsContainer
@@ -82,12 +82,16 @@ class ArtifactsContainer implements ArtifactsContainerInterface
      * Add a received response object.
      *
      * @param string $requestIndex
+     * @param int $sequenceNumber
      * @param TrackResponseInterface $apiResponse
      * @return void
      */
-    public function addApiResponse(string $requestIndex, TrackResponseInterface $apiResponse)
+    public function addApiResponse(string $requestIndex, int $sequenceNumber, TrackResponseInterface $apiResponse)
     {
-        $this->apiResponses[$requestIndex] = $apiResponse;
+        if (!isset($this->apiResponses[$requestIndex])) {
+            $this->apiResponses[$requestIndex] = [];
+        }
+        $this->apiResponses[$requestIndex][$sequenceNumber] = $apiResponse;
     }
 
     /**
@@ -135,7 +139,7 @@ class ArtifactsContainer implements ArtifactsContainerInterface
     /**
      * Obtain the response objects as received from the web service.
      *
-     * @return TrackResponseInterface[]
+     * @return TrackResponseInterface[][]
      */
     public function getApiResponses(): array
     {

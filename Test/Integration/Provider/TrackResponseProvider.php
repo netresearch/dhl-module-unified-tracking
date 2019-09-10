@@ -59,6 +59,7 @@ class TrackResponseProvider
 
         $trackingInformation = new TrackResponse(
             $trackingNumber,
+            0,
             'parcel-de',
             $latestStatus,
             1,

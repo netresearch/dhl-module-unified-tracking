@@ -6,13 +6,13 @@ declare(strict_types=1);
 
 namespace Dhl\UnifiedTracking\Webservice\Pipeline\Stage;
 
-use Dhl\UnifiedTracking\Model\Config\ModuleConfig;
-use Dhl\UnifiedTracking\Webservice\Pipeline\ArtifactsContainer;
 use Dhl\Sdk\UnifiedTracking\Api\ServiceFactoryInterface;
 use Dhl\Sdk\UnifiedTracking\Exception\ServiceException;
 use Dhl\ShippingCore\Api\Data\Pipeline\ArtifactsContainerInterface;
 use Dhl\ShippingCore\Api\Data\TrackRequest\TrackRequestInterface;
 use Dhl\ShippingCore\Api\Pipeline\RequestTracksStageInterface;
+use Dhl\UnifiedTracking\Model\Config\ModuleConfig;
+use Dhl\UnifiedTracking\Webservice\Pipeline\ArtifactsContainer;
 use Magento\Framework\Locale\ResolverInterface;
 use Psr\Log\LoggerInterface;
 
@@ -52,6 +52,7 @@ class SendRequestStage implements RequestTracksStageInterface
 
     /**
      * SendRequestStage constructor.
+     *
      * @param ServiceFactoryInterface $serviceFactory
      * @param ModuleConfig $config
      * @param ResolverInterface $resolver
@@ -101,7 +102,7 @@ class SendRequestStage implements RequestTracksStageInterface
                 );
 
                 foreach ($trackingInformation as $track) {
-                    $artifactsContainer->addApiResponse($track->getId(), $track);
+                    $artifactsContainer->addApiResponse($track->getTrackingId(), $track->getSequenceNumber(), $track);
                 }
             } catch (ServiceException $exception) {
                 $artifactsContainer->addError($request->getTrackNumber(), $exception->getMessage());

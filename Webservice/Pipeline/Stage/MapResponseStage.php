@@ -6,6 +6,7 @@ declare(strict_types=1);
 
 namespace Dhl\UnifiedTracking\Webservice\Pipeline\Stage;
 
+use Dhl\Sdk\UnifiedTracking\Api\Data\TrackResponseInterface;
 use Dhl\UnifiedTracking\Webservice\Pipeline\ArtifactsContainer;
 use Dhl\UnifiedTracking\Webservice\Pipeline\ResponseDataMapper;
 use Dhl\ShippingCore\Api\Data\Pipeline\ArtifactsContainerInterface;
@@ -59,8 +60,9 @@ class MapResponseStage implements RequestTracksStageInterface
                 $artifactsContainer->addTrackError($trackingNumber, $trackingStatus);
             } elseif (array_key_exists($trackingNumber, $responses)) {
                 // web service returned a match with the response
-                $track = $responses[$trackingNumber];
-                $trackingStatus = $this->responseDataMapper->createTrackResponse($track);
+                /** @var TrackResponseInterface[] $tracks */
+                $tracks = $responses[$trackingNumber];
+                $trackingStatus = $this->responseDataMapper->createTrackResponse($tracks[0]);
                 $artifactsContainer->addTrackResponse($trackingNumber, $trackingStatus);
             } else {
                 // web service returned no match with the response
