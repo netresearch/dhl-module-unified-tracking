@@ -7,11 +7,11 @@ declare(strict_types=1);
 namespace Dhl\UnifiedTracking\Webservice\Pipeline\Stage;
 
 use Dhl\Sdk\UnifiedTracking\Api\Data\TrackResponseInterface;
-use Dhl\UnifiedTracking\Webservice\Pipeline\ArtifactsContainer;
-use Dhl\UnifiedTracking\Webservice\Pipeline\ResponseDataMapper;
 use Dhl\ShippingCore\Api\Data\Pipeline\ArtifactsContainerInterface;
 use Dhl\ShippingCore\Api\Data\TrackRequest\TrackRequestInterface;
 use Dhl\ShippingCore\Api\Pipeline\RequestTracksStageInterface;
+use Dhl\UnifiedTracking\Webservice\Pipeline\ArtifactsContainer;
+use Dhl\UnifiedTracking\Webservice\Pipeline\ResponseDataMapper;
 
 /**
  * Class MapResponseStage
@@ -58,11 +58,12 @@ class MapResponseStage implements RequestTracksStageInterface
                 $error = __('An error occurred while retrieving tracking details for tracking number %1: %2', $trackingNumber, $errorMessage);
                 $trackingStatus = $this->responseDataMapper->createErrorResponse($trackingNumber, $error);
                 $artifactsContainer->addTrackError($trackingNumber, $trackingStatus);
-            } elseif (array_key_exists($trackingNumber, $responses)) {
+            } elseif (array_key_exists($trackingNumber, $responses) && !empty($responses[$trackingNumber])) {
                 // web service returned a match with the response
                 /** @var TrackResponseInterface[] $tracks */
                 $tracks = $responses[$trackingNumber];
-                $trackingStatus = $this->responseDataMapper->createTrackResponse($tracks[0]);
+                $track = array_shift($tracks);
+                $trackingStatus = $this->responseDataMapper->createTrackResponse($track);
                 $artifactsContainer->addTrackResponse($trackingNumber, $trackingStatus);
             } else {
                 // web service returned no match with the response

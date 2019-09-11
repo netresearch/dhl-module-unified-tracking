@@ -29,7 +29,7 @@ class TrackingServiceStub implements TrackingServiceInterface
     /**
      * Service exception. Can be set to make the request fail.
      *
-     * @var ServiceException
+     * @var \Exception|ServiceException
      */
     public $exception;
 
@@ -42,6 +42,7 @@ class TrackingServiceStub implements TrackingServiceInterface
      * @param string $language
      * @return TrackResponseInterface[]
      * @throws ServiceException
+     * @throws \Exception
      */
     public function retrieveTrackingInformation(
         string $trackingNumber,
