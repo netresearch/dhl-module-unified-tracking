@@ -98,14 +98,14 @@ public function getTrackingInfo($tracking)
 The tracking web service is able to return results from across DHL divisions.
 If the integration is only meant to request tracking details from a certain carrier
 (e.g. DHL Paket), then the web service results should be filtered by providing
-a service name via DI configuration:
+a tracking configuration object via DI configuration:
 
 ```xml
 <type name="Dhl\UnifiedTracking\Webservice\Pipeline\Stage\SendRequestStage">
     <arguments>
-        <argument name="serviceNames" xsi:type="array">
-            <item name="fooCarrierCode" xsi:type="string">foo-service</item>
-            <item name="barCarrierCode" xsi:type="string">bar-service</item>
+        <argument name="configurations" xsi:type="array">
+            <item name="fooCarrierCode" xsi:type="object">Vendor\Foo\Model\TrackingConfiguration</item>
+            <item name="barCarrierCode" xsi:type="object">Vendor\Bar\Model\TrackingConfiguration</item>
         </argument>
     </arguments>
 </type>
