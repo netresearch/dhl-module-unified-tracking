@@ -7,6 +7,7 @@ declare(strict_types=1);
 namespace Dhl\UnifiedTracking\Api;
 
 use Dhl\Sdk\UnifiedTracking\Api\TrackingServiceInterface;
+use Dhl\UnifiedTracking\Exception\TrackingException;
 use Magento\Shipping\Model\Tracking\Result\AbstractResult;
 
 /**
@@ -36,6 +37,7 @@ interface TrackingInfoProviderInterface
      * @param string $trackingId
      * @param string $carrierCode
      * @return AbstractResult
+     * @throws TrackingException
      */
     public function getTrackingDetails(
         string $trackingId,
