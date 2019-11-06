@@ -1,0 +1,5 @@
+"An error occurred while retrieving tracking details for tracking number %1: %2","Beim Abrufen der Daten für die Sendungsnummer %1 ist ein Fehler aufgetreten: %2"
+"No shipment found with shipment ID %1","Keine Lieferung mit der ID %1 gefunden"
+"No track found for carrier %1 with tracking number %2.","Keine Sendung gefunden für Carrier %1 mit Sendungsnummer %2."
+"No tracking details found for tracking number %1.","Keine Sendungsdaten gefunden für Sendungsnummer %1."
+"Unable to load tracking details for tracking number %1.","Details zur Sendungsnummer %1 konnten nicht geladen werden."
