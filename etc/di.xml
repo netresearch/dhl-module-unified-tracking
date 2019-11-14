@@ -41,8 +41,4 @@
             <argument name="trackingInfoProvider" xsi:type="object">Dhl\UnifiedTracking\Model\TrackingInfoProvider\Proxy</argument>
         </arguments>
     </type>
-
-    <type name="Dhl\UnifiedTracking\Webservice\Pipeline\ResponseDataMapper">
-        <plugin name="dhlgw_adjust_timezone" type="Dhl\UnifiedTracking\Plugin\ParcelDe\AdjustTimezone"/>
-    </type>
 </config>

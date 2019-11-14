@@ -14,6 +14,7 @@ use Dhl\UnifiedTracking\Api\Data\TrackingConfigurationInterface;
 use Dhl\UnifiedTracking\Model\Config\ModuleConfig;
 use Dhl\UnifiedTracking\Webservice\Pipeline\ArtifactsContainer;
 use Magento\Framework\Locale\ResolverInterface;
+use Magento\Framework\Stdlib\DateTime\TimezoneInterface;
 use Magento\Sales\Model\Order\Shipment;
 use Psr\Log\LoggerInterface;
 
@@ -52,12 +53,18 @@ class SendRequestStage implements RequestTracksStageInterface
     private $logger;
 
     /**
+     * @var TimezoneInterface
+     */
+    private $timezone;
+
+    /**
      * SendRequestStage constructor.
      *
      * @param ServiceFactoryInterface $serviceFactory
      * @param ModuleConfig $config
      * @param ResolverInterface $resolver
      * @param LoggerInterface $logger
+     * @param TimezoneInterface $timezone
      * @param TrackingConfigurationInterface[] $configurations
      */
     public function __construct(
@@ -65,13 +72,15 @@ class SendRequestStage implements RequestTracksStageInterface
         ModuleConfig $config,
         ResolverInterface $resolver,
         LoggerInterface $logger,
+        TimezoneInterface $timezone,
         $configurations = []
     ) {
         $this->serviceFactory = $serviceFactory;
         $this->config = $config;
         $this->resolver = $resolver;
-        $this->configurations = $configurations;
         $this->logger = $logger;
+        $this->timezone = $timezone;
+        $this->configurations = $configurations;
     }
 
     /**
@@ -131,7 +140,8 @@ class SendRequestStage implements RequestTracksStageInterface
                 }
                 $trackingService = $this->serviceFactory->createTrackingService(
                     $this->config->getConsumerKey(),
-                    $logger
+                    $logger,
+                    $this->timezone->scopeDate($artifactsContainer->getStoreId())->getTimezone()
                 );
 
                 try {

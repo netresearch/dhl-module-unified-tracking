@@ -33,17 +33,6 @@ class TrackingServiceStub implements TrackingServiceInterface
      */
     public $exception;
 
-    /**
-     * @param string $trackingNumber
-     * @param string|null $service
-     * @param string|null $requesterCountryCode
-     * @param string|null $originCountryCode
-     * @param string|null $recipientPostalCode
-     * @param string $language
-     * @return TrackResponseInterface[]
-     * @throws ServiceException
-     * @throws \Exception
-     */
     public function retrieveTrackingInformation(
         string $trackingNumber,
         string $service = null,

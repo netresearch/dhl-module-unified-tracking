@@ -60,16 +60,24 @@ class ResponseDataMapper
     }
 
     /**
-     * Extract localized date and time parts from \DateTime object.
+     * Extract date parts (date, time) from \DateTime object.
+     *
+     * It is important to change the time zone before extracting the date parts
+     * because Magento will convert the date to the store's time zone for display
+     * and expects the parts to be given in the default time zone (UTC).
      *
      * @param \DateTime $dateTime
      * @return string[]
      */
     private function getDateParts(\DateTime $dateTime): array
     {
+        // do not modify the original \DateTime object
+        $output = clone $dateTime;
+        $output->setTimezone(new \DateTimeZone(date_default_timezone_get()));
+
         return [
-            'date' => $dateTime->format('Y-m-d'),
-            'time' => $dateTime->format('H:i:s'),
+            'date' => $output->format('Y-m-d'),
+            'time' => $output->format('H:i:s'),
         ];
     }
 
