@@ -7,6 +7,8 @@ declare(strict_types=1);
 namespace Dhl\UnifiedTracking\Webservice\Pipeline\Stage;
 
 use Dhl\Sdk\UnifiedTracking\Api\ServiceFactoryInterface;
+use Dhl\Sdk\UnifiedTracking\Exception\DetailedServiceException;
+use Dhl\Sdk\UnifiedTracking\Exception\ServiceException;
 use Dhl\ShippingCore\Api\Data\Pipeline\ArtifactsContainerInterface;
 use Dhl\ShippingCore\Api\Data\TrackRequest\TrackRequestInterface;
 use Dhl\ShippingCore\Api\Pipeline\RequestTracksStageInterface;
@@ -138,13 +140,14 @@ class SendRequestStage implements RequestTracksStageInterface
                     $logger = $this->logger;
                     $serviceName = null;
                 }
-                $trackingService = $this->serviceFactory->createTrackingService(
-                    $this->config->getConsumerKey(),
-                    $logger,
-                    $this->timezone->scopeDate($artifactsContainer->getStoreId())->getTimezone()
-                );
 
                 try {
+                    $trackingService = $this->serviceFactory->createTrackingService(
+                        $this->config->getConsumerKey(),
+                        $logger,
+                        $this->timezone->scopeDate($artifactsContainer->getStoreId())->getTimezone()
+                    );
+
                     $trackingInformation = $trackingService->retrieveTrackingInformation(
                         $trackingRequest->getTrackNumber(),
                         $serviceName,
@@ -161,8 +164,11 @@ class SendRequestStage implements RequestTracksStageInterface
                             $track
                         );
                     }
-                } catch (\Exception $exception) {
+                } catch (DetailedServiceException $exception) {
                     $artifactsContainer->addError($trackingRequest->getTrackNumber(), $exception->getMessage());
+                } catch (ServiceException $exception) {
+                    $this->logger->error($exception->getMessage(), ['exception' => $exception]);
+                    $artifactsContainer->addError($trackingRequest->getTrackNumber(), 'Web service request failed.');
                 }
             }
         }

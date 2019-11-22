@@ -7,7 +7,7 @@ declare(strict_types=1);
 namespace Dhl\UnifiedTracking\Model;
 
 use Dhl\Sdk\UnifiedTracking\Api\Data\TrackResponseInterface;
-use Dhl\Sdk\UnifiedTracking\Exception\ClientException;
+use Dhl\Sdk\UnifiedTracking\Exception\DetailedServiceException;
 use Dhl\Sdk\UnifiedTracking\Service\ServiceFactory;
 use Dhl\ShippingCore\Test\Integration\Fixture\Data\AddressDe;
 use Dhl\ShippingCore\Test\Integration\Fixture\Data\SimpleProduct;
@@ -282,13 +282,13 @@ class GetTrackingDetailsTest extends TestCase
      */
     public function trackRequestNoResult(\Closure $getTrack)
     {
-        $errorMessage = 'No result found';
+        $errorMessage = 'Web service request failed.';
 
         /** @var ShipmentTrackInterface|Track $track */
         $track = $getTrack();
         $carrierCode = strtok($track->getShipment()->getOrder()->getShippingMethod(), '_');
 
-        $this->trackingService->exception = new ClientException($errorMessage, 404);
+        $this->trackingService->exception = new DetailedServiceException($errorMessage, 404);
 
         /** @var TrackingInfoProvider $trackingInfoProvider */
         $trackingInfoProvider = $this->objectManager->create(TrackingInfoProvider::class);
