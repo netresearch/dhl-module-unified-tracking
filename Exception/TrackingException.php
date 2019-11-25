@@ -12,7 +12,6 @@ use Magento\Framework\Exception\LocalizedException;
  * Class TrackingException
  *
  * @api
- * @package Dhl\UnifiedTracking\Exception
  * @author  Muhammad Qasim <muhammad.qasim@netresearch.de>
  * @link    https://www.netresearch.de/
  */

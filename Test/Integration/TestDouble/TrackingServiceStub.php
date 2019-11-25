@@ -13,7 +13,6 @@ use Dhl\Sdk\UnifiedTracking\Exception\ServiceException;
 /**
  * Class TrackingServiceStub
  *
- * @package Dhl\UnifiedTracking\Test\Integration\TestDouble
  * @author Christoph Aßmann <christoph.assmann@netresearch.de>
  * @link https://www.netresearch.de/
  */

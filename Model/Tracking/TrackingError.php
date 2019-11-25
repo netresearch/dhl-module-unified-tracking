@@ -13,7 +13,6 @@ use Magento\Shipping\Model\Tracking\Result\Error;
 /**
  * Class TrackingError
  *
- * @package Dhl\UnifiedTracking\Model
  * @author  Muhammad Qasim <muhammad.qasim@netresearch.de>
  * @link    https://www.netresearch.de/
  */

@@ -31,7 +31,6 @@ use PHPUnit\Framework\TestCase;
 /**
  * Class GetTrackingDetailsTest
  *
- * @package Dhl\UnifiedTracking\Test\Integration
  * @author  Christoph Aßmann <christoph.assmann@netresearch.de>
  * @link    https://www.netresearch.de/
  *

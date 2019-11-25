@@ -12,7 +12,6 @@ use Psr\Log\LoggerInterface;
  * Interface TrackingConfigurationInterface
  *
  * @api
- * @package Dhl\UnifiedTracking\Api
  * @author  Rico Sonntag <rico.sonntag@netresearch.de>
  * @link    https://www.netresearch.de/
  */

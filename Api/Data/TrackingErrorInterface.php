@@ -14,7 +14,6 @@ use Magento\Framework\Phrase;
  * Error details for a tracking number.
  *
  * @api
- * @package Dhl\UnifiedTracking\Api
  * @author  Muhammad Qasim <muhammad.qasim@netresearch.de>
  * @link    https://www.netresearch.de/
  */

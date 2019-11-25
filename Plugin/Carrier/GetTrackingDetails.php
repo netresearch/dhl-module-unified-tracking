@@ -16,7 +16,6 @@ use Psr\Log\LoggerInterface;
 /**
  * Class GetTrackingDetails
  *
- * @package Dhl\UnifiedTracking\Plugin
  * @author  Christoph Aßmann <christoph.assmann@netresearch.de>
  * @link    https://www.netresearch.de/
  */

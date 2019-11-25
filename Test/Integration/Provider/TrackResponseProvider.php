@@ -17,7 +17,6 @@ use Dhl\Sdk\UnifiedTracking\Model\Tracking\TrackResponse;
 /**
  * Class TrackResponseProvider
  *
- * @package Dhl\UnifiedTracking\Test\Integration\Provider
  * @author Muhammad Qasim <muhammad.qasim@netresearch.de>
  * @link   https://www.netresearch.de/
  */

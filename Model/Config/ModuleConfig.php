@@ -13,7 +13,6 @@ use Magento\Sales\Model\Order\Shipment;
 /**
  * Class ModuleConfig
  *
- * @package Dhl\UnifiedTracking\Model
  * @author Muhammad Qasim <muhammad.qasim@netresearch.de>
  * @link   https://www.netresearch.de/
  */

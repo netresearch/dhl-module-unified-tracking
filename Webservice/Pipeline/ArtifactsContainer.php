@@ -14,7 +14,6 @@ use Dhl\UnifiedTracking\Api\Data\TrackingStatusInterface;
 /**
  * Class ArtifactsContainer
  *
- * @package Dhl\UnifiedTracking\Webservice
  * @author  Christoph Aßmann <christoph.assmann@netresearch.de>
  * @link    https://www.netresearch.de/
  */

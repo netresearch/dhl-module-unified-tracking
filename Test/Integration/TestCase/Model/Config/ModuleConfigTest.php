@@ -12,7 +12,6 @@ use PHPUnit\Framework\TestCase;
 /**
  * Class ModuleConfigTest
  *
- * @package Dhl\UnifiedTracking\Test\Integration
  * @author Muhammad Qasim <muhammad.qasim@netresearch.de>
  * @link   https://www.netresearch.de/
  *
