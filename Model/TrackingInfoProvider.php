@@ -6,12 +6,10 @@ declare(strict_types=1);
 
 namespace Dhl\UnifiedTracking\Model;
 
-use Dhl\UnifiedTracking\Api\Data\TrackingErrorInterface;
-use Dhl\UnifiedTracking\Api\Data\TrackingStatusInterface;
+use Dhl\ShippingCore\Api\Pipeline\RequestTracksPipelineInterface;
 use Dhl\UnifiedTracking\Api\TrackingInfoProviderInterface;
 use Dhl\UnifiedTracking\Exception\TrackingException;
 use Dhl\UnifiedTracking\Webservice\Pipeline\ArtifactsContainer;
-use Dhl\ShippingCore\Api\Pipeline\RequestTracksPipelineInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Shipping\Model\Tracking\Result\AbstractResult;
 use Psr\Log\LoggerInterface;
@@ -19,8 +17,8 @@ use Psr\Log\LoggerInterface;
 /**
  * Class TrackingInfoProvider
  *
- * @author  Muhammad Qasim <muhammad.qasim@netresearch.de>
- * @link    https://www.netresearch.de/
+ * @author Muhammad Qasim <muhammad.qasim@netresearch.de>
+ * @link   https://www.netresearch.de/
  */
 class TrackingInfoProvider implements TrackingInfoProviderInterface
 {
@@ -56,14 +54,6 @@ class TrackingInfoProvider implements TrackingInfoProviderInterface
         $this->logger = $logger;
     }
 
-    /**
-     * Obtain carrier tracking details for given tracking number.
-     *
-     * @param string $trackingId
-     * @param string $carrierCode
-     * @return AbstractResult|TrackingStatusInterface|TrackingErrorInterface
-     * @throws TrackingException
-     */
     public function getTrackingDetails(
         string $trackingId,
         string $carrierCode
