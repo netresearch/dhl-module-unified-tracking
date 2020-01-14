@@ -101,7 +101,7 @@ If the integration is only meant to request tracking details from a certain carr
 a tracking configuration object via DI configuration:
 
 ```xml
-<type name="Dhl\UnifiedTracking\Webservice\Pipeline\Stage\SendRequestStage">
+<type name="Dhl\UnifiedTracking\Model\Pipeline\Stage\SendRequestStage">
     <arguments>
         <argument name="configurations" xsi:type="array">
             <item name="fooCarrierCode" xsi:type="object">Vendor\Foo\Model\TrackingConfiguration</item>

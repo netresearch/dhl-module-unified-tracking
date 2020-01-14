@@ -4,17 +4,17 @@
  */
 declare(strict_types=1);
 
-namespace Dhl\UnifiedTracking\Webservice\Pipeline\Stage;
+namespace Dhl\UnifiedTracking\Model\Pipeline\Stage;
 
 use Dhl\Sdk\UnifiedTracking\Api\ServiceFactoryInterface;
 use Dhl\Sdk\UnifiedTracking\Exception\DetailedServiceException;
 use Dhl\Sdk\UnifiedTracking\Exception\ServiceException;
 use Dhl\ShippingCore\Api\Data\Pipeline\ArtifactsContainerInterface;
-use Dhl\ShippingCore\Api\Data\TrackRequest\TrackRequestInterface;
+use Dhl\ShippingCore\Api\Data\Pipeline\TrackRequest\TrackRequestInterface;
 use Dhl\ShippingCore\Api\Pipeline\RequestTracksStageInterface;
 use Dhl\UnifiedTracking\Api\Data\TrackingConfigurationInterface;
 use Dhl\UnifiedTracking\Model\Config\ModuleConfig;
-use Dhl\UnifiedTracking\Webservice\Pipeline\ArtifactsContainer;
+use Dhl\UnifiedTracking\Model\Pipeline\ArtifactsContainer;
 use Magento\Framework\Locale\ResolverInterface;
 use Magento\Framework\Stdlib\DateTime\TimezoneInterface;
 use Magento\Sales\Model\Order\Shipment;

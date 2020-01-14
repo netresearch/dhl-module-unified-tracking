@@ -15,25 +15,25 @@
     <preference for="Dhl\Sdk\UnifiedTracking\Api\ServiceFactoryInterface" type="Dhl\Sdk\UnifiedTracking\Service\ServiceFactory"/>
 
     <!-- # virtual types -->
-    <virtualType name="Dhl\UnifiedTracking\Webservice\Pipeline\RequestTracksPipeline\Virtual" type="Dhl\ShippingCore\Webservice\Pipeline\Track\RequestTracksPipeline">
+    <virtualType name="Dhl\UnifiedTracking\Model\Pipeline\RequestTracksPipeline\Virtual" type="Dhl\ShippingCore\Model\Pipeline\Track\RequestTracksPipeline">
         <arguments>
             <argument name="stages" xsi:type="array">
-                <item name="send" sortOrder="100" xsi:type="object">Dhl\UnifiedTracking\Webservice\Pipeline\Stage\SendRequestStage</item>
-                <item name="mapResponse" sortOrder="200" xsi:type="object">Dhl\UnifiedTracking\Webservice\Pipeline\Stage\MapResponseStage</item>
+                <item name="send" sortOrder="100" xsi:type="object">Dhl\UnifiedTracking\Model\Pipeline\Stage\SendRequestStage</item>
+                <item name="mapResponse" sortOrder="200" xsi:type="object">Dhl\UnifiedTracking\Model\Pipeline\Stage\MapResponseStage</item>
             </argument>
-            <argument name="artifactsContainerFactory" xsi:type="object">Dhl\UnifiedTracking\Webservice\Pipeline\ArtifactsContainerFactory\Virtual</argument>
+            <argument name="artifactsContainerFactory" xsi:type="object">Dhl\UnifiedTracking\Model\Pipeline\ArtifactsContainerFactory\Virtual</argument>
         </arguments>
     </virtualType>
-    <virtualType name="Dhl\UnifiedTracking\Webservice\Pipeline\ArtifactsContainerFactory\Virtual" type="\Dhl\ShippingCore\Api\Data\Pipeline\ArtifactsContainerInterfaceFactory">
+    <virtualType name="Dhl\UnifiedTracking\Model\Pipeline\ArtifactsContainerFactory\Virtual" type="\Dhl\ShippingCore\Api\Data\Pipeline\ArtifactsContainerInterfaceFactory">
         <arguments>
-            <argument name="instanceName" xsi:type="string">Dhl\UnifiedTracking\Webservice\Pipeline\ArtifactsContainer</argument>
+            <argument name="instanceName" xsi:type="string">Dhl\UnifiedTracking\Model\Pipeline\ArtifactsContainer</argument>
         </arguments>
     </virtualType>
 
     <!-- # argument di overrides -->
     <type name="Dhl\UnifiedTracking\Model\TrackingInfoProvider">
         <arguments>
-            <argument name="trackingPipeline" xsi:type="object">Dhl\UnifiedTracking\Webservice\Pipeline\RequestTracksPipeline\Virtual</argument>
+            <argument name="trackingPipeline" xsi:type="object">Dhl\UnifiedTracking\Model\Pipeline\RequestTracksPipeline\Virtual</argument>
         </arguments>
     </type>
     <type name="Dhl\UnifiedTracking\Plugin\Carrier\GetTrackingDetails">

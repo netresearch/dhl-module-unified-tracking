@@ -6,8 +6,8 @@ declare(strict_types=1);
 
 namespace Dhl\UnifiedTracking\Model;
 
-use Dhl\ShippingCore\Api\Data\TrackRequest\TrackRequestInterface;
-use Dhl\ShippingCore\Api\Data\TrackRequest\TrackRequestInterfaceFactory;
+use Dhl\ShippingCore\Api\Data\Pipeline\TrackRequest\TrackRequestInterface;
+use Dhl\ShippingCore\Api\Data\Pipeline\TrackRequest\TrackRequestInterfaceFactory;
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\Exception\InputException;
 use Magento\Framework\Exception\NoSuchEntityException;

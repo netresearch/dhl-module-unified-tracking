@@ -9,7 +9,7 @@ namespace Dhl\UnifiedTracking\Model;
 use Dhl\ShippingCore\Api\Pipeline\RequestTracksPipelineInterface;
 use Dhl\UnifiedTracking\Api\TrackingInfoProviderInterface;
 use Dhl\UnifiedTracking\Exception\TrackingException;
-use Dhl\UnifiedTracking\Webservice\Pipeline\ArtifactsContainer;
+use Dhl\UnifiedTracking\Model\Pipeline\ArtifactsContainer;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Shipping\Model\Tracking\Result\AbstractResult;
 use Psr\Log\LoggerInterface;

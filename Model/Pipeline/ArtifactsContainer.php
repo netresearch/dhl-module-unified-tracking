@@ -4,7 +4,7 @@
  */
 declare(strict_types=1);
 
-namespace Dhl\UnifiedTracking\Webservice\Pipeline;
+namespace Dhl\UnifiedTracking\Model\Pipeline;
 
 use Dhl\Sdk\UnifiedTracking\Api\Data\TrackResponseInterface;
 use Dhl\ShippingCore\Api\Data\Pipeline\ArtifactsContainerInterface;
