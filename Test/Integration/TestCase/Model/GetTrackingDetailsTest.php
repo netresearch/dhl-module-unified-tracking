@@ -22,7 +22,6 @@ use Dhl\UnifiedTracking\Test\Integration\TestDouble\TrackingServiceStub;
 use Magento\Framework\ObjectManagerInterface;
 use Magento\Framework\Phrase;
 use Magento\Sales\Api\Data\ShipmentTrackInterface;
-use Magento\Sales\Api\Data\ShipmentTrackInterfaceFactory;
 use Magento\Sales\Model\Order\Shipment\Track;
 use Magento\Shipping\Model\Tracking\Result\AbstractResult;
 use Magento\TestFramework\Helper\Bootstrap;
@@ -79,29 +78,15 @@ class GetTrackingDetailsTest extends TestCase
      */
     public static function createTrackFixture()
     {
-        $shippingMethod = 'flatrate_flatrate';
-        $carrierCode = strtok($shippingMethod, '_');
-
-        $objectManager = Bootstrap::getObjectManager();
-        /** @var ShipmentTrackInterfaceFactory $trackFactory */
-        $trackFactory = $objectManager->create(ShipmentTrackInterfaceFactory::class);
-
-        $addressDe = new AddressDe();
-        $shipmentDe = ShipmentFixture::createShipment(
-            $addressDe,
+        $shipment = ShipmentFixture::createShipment(
+            new AddressDe(),
             [new SimpleProduct(), new SimpleProduct2()],
-            $shippingMethod
+            'flatrate_flatrate',
+            ['123456']
         );
-        $shipmentDe->save();
 
-        /** @var ShipmentTrackInterface|Track $trackDe */
-        $trackDe = $trackFactory->create();
-        $trackDe->setCarrierCode($carrierCode)->setTrackNumber('123456')->setParentId($shipmentDe->getId());
-
-        $shipmentDe->addTrack($trackDe);
-        $shipmentDe->getTracksCollection()->save();
-
-        self::$track = $trackDe;
+        $tracks = $shipment->getTracks();
+        self::$track = array_pop($tracks);
     }
 
     /**
