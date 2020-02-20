@@ -29,11 +29,12 @@
         "magento/module-shipping": "^100.2.6"
     },
     "require-dev": {
-        "phpunit/phpunit": "~6.2.0"
+        "phpunit/phpunit": "~6.2.0",
+        "tddwizard/magento2-fixtures": "^0.9.0"
     },
     "extra": {
-      "branch-alias": {
-        "dev-develop": "1.1.x-dev"
-      }
+        "branch-alias": {
+            "dev-develop": "1.1.x-dev"
+        }
     }
 }

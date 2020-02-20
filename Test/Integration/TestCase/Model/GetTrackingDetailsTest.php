@@ -9,10 +9,6 @@ namespace Dhl\UnifiedTracking\Model;
 use Dhl\Sdk\UnifiedTracking\Api\Data\TrackResponseInterface;
 use Dhl\Sdk\UnifiedTracking\Exception\DetailedServiceException;
 use Dhl\Sdk\UnifiedTracking\Service\ServiceFactory;
-use Dhl\ShippingCore\Test\Integration\Fixture\Data\AddressDe;
-use Dhl\ShippingCore\Test\Integration\Fixture\Data\SimpleProduct;
-use Dhl\ShippingCore\Test\Integration\Fixture\Data\SimpleProduct2;
-use Dhl\ShippingCore\Test\Integration\Fixture\ShipmentFixture;
 use Dhl\UnifiedTracking\Api\Data\TrackingErrorInterface;
 use Dhl\UnifiedTracking\Api\Data\TrackingEventInterface;
 use Dhl\UnifiedTracking\Api\Data\TrackingStatusInterface;
@@ -26,6 +22,9 @@ use Magento\Sales\Model\Order\Shipment\Track;
 use Magento\Shipping\Model\Tracking\Result\AbstractResult;
 use Magento\TestFramework\Helper\Bootstrap;
 use PHPUnit\Framework\TestCase;
+use TddWizard\Fixtures\Catalog\ProductBuilder;
+use TddWizard\Fixtures\Sales\OrderBuilder;
+use TddWizard\Fixtures\Sales\ShipmentBuilder;
 
 /**
  * Class GetTrackingDetailsTest
@@ -78,12 +77,13 @@ class GetTrackingDetailsTest extends TestCase
      */
     public static function createTrackFixture()
     {
-        $shipment = ShipmentFixture::createShipment(
-            new AddressDe(),
-            [new SimpleProduct(), new SimpleProduct2()],
-            'flatrate_flatrate',
-            ['123456']
-        );
+        $order = OrderBuilder::anOrder()
+            ->withShippingMethod('flatrate_flatrate')
+            ->withProducts(
+                ProductBuilder::aSimpleProduct()->withSku('foo'),
+                ProductBuilder::aSimpleProduct()->withSku('bar')
+            )->build();
+        $shipment = ShipmentBuilder::forOrder($order)->withTrackingNumbers('123456')->build();
 
         $tracks = $shipment->getTracks();
         self::$track = array_pop($tracks);
