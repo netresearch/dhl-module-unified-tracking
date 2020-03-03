@@ -18,8 +18,8 @@ a carrier module or similar.
 
 ## Compatibility
 
-* Magento 2.2.x
-* Magento 2.3.x
+* Magento 2.2.6+
+* Magento 2.3.0+
 
 ## Installation Instructions
 
