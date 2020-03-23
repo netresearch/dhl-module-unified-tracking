@@ -29,7 +29,7 @@ class TrackResponseProvider
      */
     public static function createDeResponse(string $trackingNumber): TrackResponseInterface
     {
-        $edd = new EstimatedDelivery(new \DateTime('2019-09-03 11:51:56.236396'));
+        $edd = new EstimatedDelivery(new \DateTime('2019-09-03 11:51:56.236396'), null);
         $originAddress = new Address('DE');
         $destinationAddress = new Address('DE');
 
