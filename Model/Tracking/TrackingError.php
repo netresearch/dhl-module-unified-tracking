@@ -10,12 +10,6 @@ use Dhl\UnifiedTracking\Api\Data\TrackingErrorInterface;
 use Magento\Framework\Phrase;
 use Magento\Shipping\Model\Tracking\Result\Error;
 
-/**
- * Class TrackingError
- *
- * @author  Muhammad Qasim <muhammad.qasim@netresearch.de>
- * @link    https://www.netresearch.de/
- */
 class TrackingError extends Error implements TrackingErrorInterface
 {
     /**

@@ -9,11 +9,7 @@ namespace Dhl\UnifiedTracking\Api\Data;
 use Psr\Log\LoggerInterface;
 
 /**
- * Interface TrackingConfigurationInterface
- *
  * @api
- * @author  Rico Sonntag <rico.sonntag@netresearch.de>
- * @link    https://www.netresearch.de/
  */
 interface TrackingConfigurationInterface
 {

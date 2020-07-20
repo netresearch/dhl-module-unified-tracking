@@ -27,11 +27,6 @@ use TddWizard\Fixtures\Sales\OrderBuilder;
 use TddWizard\Fixtures\Sales\ShipmentBuilder;
 
 /**
- * Class GetTrackingDetailsTest
- *
- * @author  Christoph Aßmann <christoph.assmann@netresearch.de>
- * @link    https://www.netresearch.de/
- *
  * @magentoAppArea adminhtml
  * @magentoAppIsolation enabled
  * @magentoDbIsolation enabled

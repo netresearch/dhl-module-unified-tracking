@@ -18,12 +18,6 @@ use Dhl\UnifiedTracking\Api\Data\TrackingStatusInterface;
 use Dhl\UnifiedTracking\Api\Data\TrackingStatusInterfaceFactory;
 use Magento\Framework\Phrase;
 
-/**
- * Class ResponseDataMapper
- *
- * @author  Muhammad Qasim <muhammad.qasim@netresearch.de>
- * @link    https://www.netresearch.de/
- */
 class ResponseDataMapper
 {
     /**

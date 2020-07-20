@@ -14,12 +14,6 @@ use Dhl\Sdk\UnifiedTracking\Model\Tracking\Response\PhysicalAttributes;
 use Dhl\Sdk\UnifiedTracking\Model\Tracking\Response\ShipmentEvent;
 use Dhl\Sdk\UnifiedTracking\Model\Tracking\TrackResponse;
 
-/**
- * Class TrackResponseProvider
- *
- * @author Muhammad Qasim <muhammad.qasim@netresearch.de>
- * @link   https://www.netresearch.de/
- */
 class TrackResponseProvider
 {
     /**

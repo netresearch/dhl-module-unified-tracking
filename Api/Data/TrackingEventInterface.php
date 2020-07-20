@@ -12,8 +12,6 @@ namespace Dhl\UnifiedTracking\Api\Data;
  * Details for a tracking event.
  *
  * @api
- * @author  Muhammad Qasim <muhammad.qasim@netresearch.de>
- * @link    https://www.netresearch.de/
  */
 interface TrackingEventInterface
 {

@@ -9,12 +9,6 @@ namespace Dhl\UnifiedTracking\Model\Tracking;
 use Dhl\UnifiedTracking\Api\Data\TrackingEventInterface;
 use Magento\Framework\DataObject;
 
-/**
- * Class TrackingEvent
- *
- * @author  Muhammad Qasim <muhammad.qasim@netresearch.de>
- * @link    https://www.netresearch.de/
- */
 class TrackingEvent extends DataObject implements TrackingEventInterface
 {
     /**

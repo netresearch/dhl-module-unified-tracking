@@ -10,11 +10,6 @@ use Magento\TestFramework\ObjectManager;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class ModuleConfigTest
- *
- * @author Muhammad Qasim <muhammad.qasim@netresearch.de>
- * @link   https://www.netresearch.de/
- *
  * @magentoAppArea adminhtml
  */
 class ModuleConfigTest extends TestCase

@@ -16,12 +16,6 @@ use Magento\Sales\Api\ShipmentRepositoryInterface;
 use Magento\Sales\Api\ShipmentTrackRepositoryInterface;
 use Magento\Sales\Model\Order\ShipmentRepository;
 
-/**
- * Class TrackRequestBuilder
- *
- * @author  Muhammad Qasim <muhammad.qasim@netresearch.de>
- * @link    https://www.netresearch.de/
- */
 class TrackRequestBuilder
 {
     /**

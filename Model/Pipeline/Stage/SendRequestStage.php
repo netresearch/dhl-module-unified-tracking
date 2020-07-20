@@ -20,12 +20,6 @@ use Magento\Framework\Stdlib\DateTime\TimezoneInterface;
 use Magento\Sales\Model\Order\Shipment;
 use Psr\Log\LoggerInterface;
 
-/**
- * Class SendRequestStage
- *
- * @author  Muhammad Qasim <muhammad.qasim@netresearch.de>
- * @link    https://www.netresearch.de/
- */
 class SendRequestStage implements RequestTracksStageInterface
 {
     /**

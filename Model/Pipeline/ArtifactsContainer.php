@@ -11,12 +11,6 @@ use Dhl\ShippingCore\Api\Data\Pipeline\ArtifactsContainerInterface;
 use Dhl\UnifiedTracking\Api\Data\TrackingErrorInterface;
 use Dhl\UnifiedTracking\Api\Data\TrackingStatusInterface;
 
-/**
- * Class ArtifactsContainer
- *
- * @author  Christoph Aßmann <christoph.assmann@netresearch.de>
- * @link    https://www.netresearch.de/
- */
 class ArtifactsContainer implements ArtifactsContainerInterface
 {
     /**

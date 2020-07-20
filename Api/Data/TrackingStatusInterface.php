@@ -12,8 +12,6 @@ namespace Dhl\UnifiedTracking\Api\Data;
  * Details for a tracking number.
  *
  * @api
- * @author  Muhammad Qasim <muhammad.qasim@netresearch.de>
- * @link    https://www.netresearch.de/
  */
 interface TrackingStatusInterface
 {

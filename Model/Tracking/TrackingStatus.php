@@ -10,12 +10,6 @@ use Dhl\UnifiedTracking\Api\Data\TrackingEventInterface;
 use Dhl\UnifiedTracking\Api\Data\TrackingStatusInterface;
 use Magento\Shipping\Model\Tracking\Result\Status;
 
-/**
- * Class TrackingStatus
- *
- * @author  Muhammad Qasim <muhammad.qasim@netresearch.de>
- * @link    https://www.netresearch.de/
- */
 class TrackingStatus extends Status implements TrackingStatusInterface
 {
     /**

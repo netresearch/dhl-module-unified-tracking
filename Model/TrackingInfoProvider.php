@@ -14,12 +14,6 @@ use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Shipping\Model\Tracking\Result\AbstractResult;
 use Psr\Log\LoggerInterface;
 
-/**
- * Class TrackingInfoProvider
- *
- * @author Muhammad Qasim <muhammad.qasim@netresearch.de>
- * @link   https://www.netresearch.de/
- */
 class TrackingInfoProvider implements TrackingInfoProviderInterface
 {
     /**

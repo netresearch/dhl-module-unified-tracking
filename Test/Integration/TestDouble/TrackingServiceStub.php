@@ -10,12 +10,6 @@ use Dhl\Sdk\UnifiedTracking\Api\Data\TrackResponseInterface;
 use Dhl\Sdk\UnifiedTracking\Api\TrackingServiceInterface;
 use Dhl\Sdk\UnifiedTracking\Exception\ServiceException;
 
-/**
- * Class TrackingServiceStub
- *
- * @author Christoph Aßmann <christoph.assmann@netresearch.de>
- * @link https://www.netresearch.de/
- */
 class TrackingServiceStub implements TrackingServiceInterface
 {
     /**

@@ -13,12 +13,6 @@ use Magento\Shipping\Model\Carrier\AbstractCarrierOnline;
 use Magento\Shipping\Model\Tracking\Result\AbstractResult;
 use Psr\Log\LoggerInterface;
 
-/**
- * Class GetTrackingDetails
- *
- * @author  Christoph Aßmann <christoph.assmann@netresearch.de>
- * @link    https://www.netresearch.de/
- */
 class GetTrackingDetails
 {
     /**

@@ -16,8 +16,6 @@ use Magento\Shipping\Model\Tracking\Result\AbstractResult;
  * Entry point for retrieving tracking data from the DHL web service.
  *
  * @api
- * @author  Muhammad Qasim <muhammad.qasim@netresearch.de>
- * @link    https://www.netresearch.de/
  */
 interface TrackingInfoProviderInterface
 {

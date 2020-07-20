@@ -10,12 +10,6 @@ use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Store\Model\ScopeInterface;
 use Magento\Sales\Model\Order\Shipment;
 
-/**
- * Class ModuleConfig
- *
- * @author Muhammad Qasim <muhammad.qasim@netresearch.de>
- * @link   https://www.netresearch.de/
- */
 class ModuleConfig
 {
     const CONFIG_PATH_CONSUMER_KEY = 'dhlshippingsolutions/tracking/consumer_key';

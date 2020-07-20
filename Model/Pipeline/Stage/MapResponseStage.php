@@ -13,12 +13,6 @@ use Dhl\ShippingCore\Api\Pipeline\RequestTracksStageInterface;
 use Dhl\UnifiedTracking\Model\Pipeline\ArtifactsContainer;
 use Dhl\UnifiedTracking\Model\Pipeline\ResponseDataMapper;
 
-/**
- * Class MapResponseStage
- *
- * @author  Muhammad Qasim <muhammad.qasim@netresearch.de>
- * @link    https://www.netresearch.de/
- */
 class MapResponseStage implements RequestTracksStageInterface
 {
     /**
