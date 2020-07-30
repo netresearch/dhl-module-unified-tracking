@@ -51,7 +51,7 @@ class GetTrackingDetailsTest extends TestCase
     /**
      * Prepare object manager, set up web service stub.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -87,7 +87,7 @@ class GetTrackingDetailsTest extends TestCase
     /**
      * Create API responses that match the requested tracking number.
      *
-     * @return TrackResponseInterface[]
+     * @return \Closure[][]
      * @throws \Exception
      */
     public function exactMatchDataProvider()
@@ -113,7 +113,7 @@ class GetTrackingDetailsTest extends TestCase
     /**
      * Create non-empty API responses that do not exactly match the requested tracking number (fuzzy search).
      *
-     * @return TrackResponseInterface[]
+     * @return \Closure[][]
      * @throws \Exception
      */
     public function noExactMatchDataProvider()
@@ -197,15 +197,15 @@ class GetTrackingDetailsTest extends TestCase
         self::assertEmpty($trackingDetails->getErrorMessage());
 
         $progressDetail = $trackingDetails->getProgressDetail();
-        self::assertInternalType('array', $progressDetail);
+        self::assertTrue(\is_array($progressDetail));
         self::assertContainsOnly(TrackingEventInterface::class, $progressDetail);
         self::assertCount(count($trackResponse->getStatusEvents()), $progressDetail);
 
         foreach ($progressDetail as $idx => $trackingEvent) {
-            self::assertInternalType('string', $trackingEvent->getDeliveryDate());
-            self::assertInternalType('string', $trackingEvent->getDeliveryTime());
-            self::assertInternalType('string', $trackingEvent->getDeliveryLocation());
-            self::assertInternalType('string', $trackingEvent->getActivity());
+            self::assertTrue(\is_string($trackingEvent->getDeliveryDate()));
+            self::assertTrue(\is_string($trackingEvent->getDeliveryTime()));
+            self::assertTrue(\is_string($trackingEvent->getDeliveryLocation()));
+            self::assertTrue(\is_string($trackingEvent->getActivity()));
             self::assertSame($trackResponse->getStatusEvents()[$idx]->getDescription(), $trackingEvent->getActivity());
         }
     }
