@@ -1,8 +1,8 @@
 {
     "name": "dhl/module-unified-tracking",
     "version": "1.0.0",
-    "description": "Integrate the DPDHL Group tracking web service into Magento® 2 carrier modules.",
     "type": "magento2-module",
+    "description": "Integrate the DPDHL Group tracking web service into Magento® 2 carrier modules.",
     "license": "OSL-3.0",
     "authors": [
         {
