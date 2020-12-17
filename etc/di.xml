@@ -31,6 +31,13 @@
     </virtualType>
 
     <!-- # argument di overrides -->
+    <type name="Dhl\ShippingCore\Model\Util\ApiLogAnonymizer">
+        <arguments>
+            <argument name="patterns" xsi:type="array">
+                <item name="dhlTrackingApiKey" xsi:type="string">|DHL-API-Key: (.+)|</item>
+            </argument>
+        </arguments>
+    </type>
     <type name="Dhl\UnifiedTracking\Model\TrackingInfoProvider">
         <arguments>
             <argument name="trackingPipeline" xsi:type="object">Dhl\UnifiedTracking\Model\Pipeline\RequestTracksPipeline\Virtual</argument>
