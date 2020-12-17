@@ -1,7 +1,9 @@
 <?php
+
 /**
  * See LICENSE.md for license details.
  */
+
 declare(strict_types=1);
 
 namespace Dhl\UnifiedTracking\Api\Data;
@@ -27,7 +29,7 @@ interface TrackingErrorInterface
     /**
      * Obtain tracking error message.
      *
-     * @return Phrase|null
+     * @return Phrase
      */
-    public function getErrorMessage();
+    public function getErrorMessage(): Phrase;
 }

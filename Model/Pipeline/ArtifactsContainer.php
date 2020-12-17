@@ -1,7 +1,9 @@
 <?php
+
 /**
  * See LICENSE.md for license details.
  */
+
 declare(strict_types=1);
 
 namespace Dhl\UnifiedTracking\Model\Pipeline;
@@ -124,7 +126,7 @@ class ArtifactsContainer implements ArtifactsContainerInterface
      *
      * @return string[]
      */
-    public function getErrors()
+    public function getErrors(): array
     {
         return $this->errors;
     }

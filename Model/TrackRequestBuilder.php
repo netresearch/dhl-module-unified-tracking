@@ -1,7 +1,9 @@
 <?php
+
 /**
  * See LICENSE.md for license details.
  */
+
 declare(strict_types=1);
 
 namespace Dhl\UnifiedTracking\Model;
@@ -108,7 +110,6 @@ class TrackRequestBuilder
         }
 
         $tracks = $searchResult->getItems();
-        /** @var ShipmentTrackInterface $track */
         $track = array_shift($tracks);
 
         try {

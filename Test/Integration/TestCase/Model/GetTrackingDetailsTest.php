@@ -1,7 +1,9 @@
 <?php
+
 /**
  * See LICENSE.md for license details.
  */
+
 declare(strict_types=1);
 
 namespace Dhl\UnifiedTracking\Model;
@@ -58,10 +60,13 @@ class GetTrackingDetailsTest extends TestCase
         $this->objectManager = Bootstrap::getObjectManager();
 
         $this->trackingService = $this->objectManager->create(TrackingServiceStub::class);
-        $serviceFactoryMock = $this->getMockBuilder(ServiceFactory::class)
-                                   ->setMethods(['createTrackingService'])
-                                   ->getMock();
-        $serviceFactoryMock->method('createTrackingService')->willReturn($this->trackingService);
+        $serviceFactoryMock = $this->createConfiguredMock(
+            ServiceFactory::class,
+            [
+                'createTrackingService' => $this->trackingService
+            ]
+        );
+
         $this->objectManager->addSharedInstance($serviceFactoryMock, ServiceFactory::class);
     }
 
@@ -87,10 +92,10 @@ class GetTrackingDetailsTest extends TestCase
     /**
      * Create API responses that match the requested tracking number.
      *
-     * @return \Closure[][]
+     * @return callable[][]
      * @throws \Exception
      */
-    public function exactMatchDataProvider()
+    public function exactMatchDataProvider(): array
     {
         return [
             'api_returns_one_match' => [
@@ -113,10 +118,10 @@ class GetTrackingDetailsTest extends TestCase
     /**
      * Create non-empty API responses that do not exactly match the requested tracking number (fuzzy search).
      *
-     * @return \Closure[][]
+     * @return callable[][]
      * @throws \Exception
      */
-    public function noExactMatchDataProvider()
+    public function noExactMatchDataProvider(): array
     {
         return [
             'api_returns_one_mismatch' => [

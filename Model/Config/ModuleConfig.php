@@ -1,7 +1,9 @@
 <?php
+
 /**
  * See LICENSE.md for license details.
  */
+
 declare(strict_types=1);
 
 namespace Dhl\UnifiedTracking\Model\Config;
@@ -12,7 +14,7 @@ use Magento\Sales\Model\Order\Shipment;
 
 class ModuleConfig
 {
-    const CONFIG_PATH_CONSUMER_KEY = 'dhlshippingsolutions/tracking/consumer_key';
+    private const CONFIG_PATH_CONSUMER_KEY = 'dhlshippingsolutions/tracking/consumer_key';
 
     /**
      * @var ScopeConfigInterface

@@ -1,7 +1,9 @@
 <?php
+
 /**
  * See LICENSE.md for license details.
  */
+
 declare(strict_types=1);
 
 namespace Dhl\UnifiedTracking\Test\Integration\Provider;
@@ -39,7 +41,7 @@ class TrackResponseProvider
 
         $statusEvents = [$latestStatus];
         foreach (['transit', 'pre-transit'] as $statusCode) {
-            $statusEvents[]= new ShipmentEvent(
+            $statusEvents[] = new ShipmentEvent(
                 new \DateTime('2019-08-30 07:42:00.000000'),
                 $statusCode,
                 'Die Sendung foo.',
@@ -66,7 +68,7 @@ class TrackResponseProvider
             null,
             $statusEvents,
             ['123456789'],
-            ['123456789']
+            []
         );
 
         return $trackingInformation;

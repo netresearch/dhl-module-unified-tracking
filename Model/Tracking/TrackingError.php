@@ -1,7 +1,9 @@
 <?php
+
 /**
  * See LICENSE.md for license details.
  */
+
 declare(strict_types=1);
 
 namespace Dhl\UnifiedTracking\Model\Tracking;
@@ -58,7 +60,7 @@ class TrackingError extends Error implements TrackingErrorInterface
      *
      * @return Phrase
      */
-    public function getErrorMessage()
+    public function getErrorMessage(): Phrase
     {
         return $this->errorMessage;
     }
