@@ -9,11 +9,11 @@ declare(strict_types=1);
 namespace Dhl\UnifiedTracking\Model\Pipeline\Stage;
 
 use Dhl\Sdk\UnifiedTracking\Api\Data\TrackResponseInterface;
-use Dhl\ShippingCore\Api\Data\Pipeline\ArtifactsContainerInterface;
-use Dhl\ShippingCore\Api\Data\Pipeline\TrackRequest\TrackRequestInterface;
-use Dhl\ShippingCore\Api\Pipeline\RequestTracksStageInterface;
 use Dhl\UnifiedTracking\Model\Pipeline\ArtifactsContainer;
 use Dhl\UnifiedTracking\Model\Pipeline\ResponseDataMapper;
+use Netresearch\ShippingCore\Api\Data\Pipeline\ArtifactsContainerInterface;
+use Netresearch\ShippingCore\Api\Data\Pipeline\TrackRequest\TrackRequestInterface;
+use Netresearch\ShippingCore\Api\Pipeline\RequestTracksStageInterface;
 
 class MapResponseStage implements RequestTracksStageInterface
 {

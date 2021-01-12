@@ -8,8 +8,6 @@ declare(strict_types=1);
 
 namespace Dhl\UnifiedTracking\Model;
 
-use Dhl\ShippingCore\Api\Data\Pipeline\TrackRequest\TrackRequestInterface;
-use Dhl\ShippingCore\Api\Data\Pipeline\TrackRequest\TrackRequestInterfaceFactory;
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\Exception\InputException;
 use Magento\Framework\Exception\NoSuchEntityException;
@@ -17,6 +15,8 @@ use Magento\Sales\Api\Data\ShipmentTrackInterface;
 use Magento\Sales\Api\ShipmentRepositoryInterface;
 use Magento\Sales\Api\ShipmentTrackRepositoryInterface;
 use Magento\Sales\Model\Order\ShipmentRepository;
+use Netresearch\ShippingCore\Api\Data\Pipeline\TrackRequest\TrackRequestInterface;
+use Netresearch\ShippingCore\Api\Data\Pipeline\TrackRequest\TrackRequestInterfaceFactory;
 
 class TrackRequestBuilder
 {

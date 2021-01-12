@@ -9,9 +9,9 @@ declare(strict_types=1);
 namespace Dhl\UnifiedTracking\Model\Pipeline;
 
 use Dhl\Sdk\UnifiedTracking\Api\Data\TrackResponseInterface;
-use Dhl\ShippingCore\Api\Data\Pipeline\ArtifactsContainerInterface;
 use Dhl\UnifiedTracking\Api\Data\TrackingErrorInterface;
 use Dhl\UnifiedTracking\Api\Data\TrackingStatusInterface;
+use Netresearch\ShippingCore\Api\Data\Pipeline\ArtifactsContainerInterface;
 
 class ArtifactsContainer implements ArtifactsContainerInterface
 {
@@ -56,7 +56,7 @@ class ArtifactsContainer implements ArtifactsContainerInterface
      * @param int $storeId
      * @return void
      */
-    public function setStoreId(int $storeId)
+    public function setStoreId(int $storeId): void
     {
         $this->storeId = $storeId;
     }

@@ -8,12 +8,12 @@ declare(strict_types=1);
 
 namespace Dhl\UnifiedTracking\Model;
 
-use Dhl\ShippingCore\Api\Pipeline\RequestTracksPipelineInterface;
 use Dhl\UnifiedTracking\Api\TrackingInfoProviderInterface;
 use Dhl\UnifiedTracking\Exception\TrackingException;
 use Dhl\UnifiedTracking\Model\Pipeline\ArtifactsContainer;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Shipping\Model\Tracking\Result\AbstractResult;
+use Netresearch\ShippingCore\Api\Pipeline\RequestTracksPipelineInterface;
 use Psr\Log\LoggerInterface;
 
 class TrackingInfoProvider implements TrackingInfoProviderInterface

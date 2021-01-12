@@ -15,7 +15,7 @@
     <preference for="Dhl\Sdk\UnifiedTracking\Api\ServiceFactoryInterface" type="Dhl\Sdk\UnifiedTracking\Service\ServiceFactory"/>
 
     <!-- # virtual types -->
-    <virtualType name="Dhl\UnifiedTracking\Model\Pipeline\RequestTracksPipeline\Virtual" type="Dhl\ShippingCore\Model\Pipeline\Track\RequestTracksPipeline">
+    <virtualType name="Dhl\UnifiedTracking\Model\Pipeline\RequestTracksPipeline\Virtual" type="Netresearch\ShippingCore\Model\Pipeline\Track\RequestTracksPipeline">
         <arguments>
             <argument name="stages" xsi:type="array">
                 <item name="send" sortOrder="100" xsi:type="object">Dhl\UnifiedTracking\Model\Pipeline\Stage\SendRequestStage</item>
@@ -24,14 +24,14 @@
             <argument name="artifactsContainerFactory" xsi:type="object">Dhl\UnifiedTracking\Model\Pipeline\ArtifactsContainerFactory\Virtual</argument>
         </arguments>
     </virtualType>
-    <virtualType name="Dhl\UnifiedTracking\Model\Pipeline\ArtifactsContainerFactory\Virtual" type="\Dhl\ShippingCore\Api\Data\Pipeline\ArtifactsContainerInterfaceFactory">
+    <virtualType name="Dhl\UnifiedTracking\Model\Pipeline\ArtifactsContainerFactory\Virtual" type="Netresearch\ShippingCore\Api\Data\Pipeline\ArtifactsContainerInterfaceFactory">
         <arguments>
             <argument name="instanceName" xsi:type="string">Dhl\UnifiedTracking\Model\Pipeline\ArtifactsContainer</argument>
         </arguments>
     </virtualType>
 
     <!-- # argument di overrides -->
-    <type name="Dhl\ShippingCore\Model\Util\ApiLogAnonymizer">
+    <type name="Netresearch\ShippingCore\Model\Util\ApiLogAnonymizer">
         <arguments>
             <argument name="patterns" xsi:type="array">
                 <item name="dhlTrackingApiKey" xsi:type="string">|DHL-API-Key: (.+)|</item>
