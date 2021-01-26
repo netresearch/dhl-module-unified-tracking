@@ -1,6 +1,6 @@
-# Deutsche Post DHL Group Tracking Extension
+# DHL Unified Tracking Extension
 
-The DPDHL Group tracking extension offers an integration of the [Shipment Tracking - Unified
+The DHL Unified Tracking extension offers an integration of the [Shipment Tracking - Unified
 API](https://developer.dhl/api-reference/shipment-tracking) into the Magento® 2 platform. 
 
 ## Description
@@ -13,19 +13,18 @@ a carrier module or similar.
 
 ## Requirements
 
-* PHP >= 7.0.6
+* PHP >= 7.1.3
 * PHP Internationalization extension
 
 ## Compatibility
 
-* Magento 2.2.6+
 * Magento 2.3.0+
 
 ## Installation Instructions
 
 Install sources:
 
-    composer require dhl/module-group-tracking
+    composer require dhl/module-unified-tracking
 
 Enable module:
 
@@ -135,4 +134,4 @@ to <dhl.support@netresearch.de>.
 
 ## Copyright
 
-(c) 2019 DPDHL Group
+(c) 2021 DPDHL Group
