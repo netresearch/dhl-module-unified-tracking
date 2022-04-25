@@ -68,7 +68,7 @@ class ArtifactsContainer implements ArtifactsContainerInterface
      * @param string $errorMessage
      * @return void
      */
-    public function addError(string $trackingNumber, string $errorMessage)
+    public function addError(string $trackingNumber, string $errorMessage): void
     {
         $this->errors[$trackingNumber] = $errorMessage;
     }
@@ -81,7 +81,7 @@ class ArtifactsContainer implements ArtifactsContainerInterface
      * @param TrackResponseInterface $apiResponse
      * @return void
      */
-    public function addApiResponse(string $requestIndex, int $sequenceNumber, TrackResponseInterface $apiResponse)
+    public function addApiResponse(string $requestIndex, int $sequenceNumber, TrackResponseInterface $apiResponse): void
     {
         if (!isset($this->apiResponses[$requestIndex])) {
             $this->apiResponses[$requestIndex] = [];
@@ -95,7 +95,7 @@ class ArtifactsContainer implements ArtifactsContainerInterface
      * @param string $requestIndex
      * @param TrackingStatusInterface $trackResponse
      */
-    public function addTrackResponse(string $requestIndex, TrackingStatusInterface $trackResponse)
+    public function addTrackResponse(string $requestIndex, TrackingStatusInterface $trackResponse): void
     {
         $this->trackResponses[$requestIndex] = $trackResponse;
     }
@@ -106,7 +106,7 @@ class ArtifactsContainer implements ArtifactsContainerInterface
      * @param string $requestIndex
      * @param TrackingErrorInterface $trackError
      */
-    public function addTrackError(string $requestIndex, TrackingErrorInterface $trackError)
+    public function addTrackError(string $requestIndex, TrackingErrorInterface $trackError): void
     {
         $this->trackErrors[$requestIndex] = $trackError;
     }

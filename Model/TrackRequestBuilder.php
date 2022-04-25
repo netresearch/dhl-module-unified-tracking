@@ -75,7 +75,7 @@ class TrackRequestBuilder
      *
      * @param string $trackingNumber
      */
-    public function setTrackingNumber(string $trackingNumber)
+    public function setTrackingNumber(string $trackingNumber): void
     {
         $this->trackingNumber = $trackingNumber;
     }
@@ -85,7 +85,7 @@ class TrackRequestBuilder
      *
      * @param string $carrierCode
      */
-    public function setCarrierCode(string $carrierCode)
+    public function setCarrierCode(string $carrierCode): void
     {
         $this->carrierCode = $carrierCode;
     }
