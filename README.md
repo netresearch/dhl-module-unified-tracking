@@ -13,7 +13,7 @@ a carrier module or similar.
 
 ## Requirements
 
-* PHP >= 7.1.3
+* PHP >= 7.2
 * PHP Internationalization extension
 
 ## Compatibility
