@@ -13,12 +13,12 @@ a carrier module or similar.
 
 ## Requirements
 
-* PHP >= 7.2
+* PHP >= 8.2
 * PHP Internationalization extension
 
 ## Compatibility
 
-* Magento 2.3.0+
+* Magento 2.4.7+
 
 ## Installation Instructions
 
