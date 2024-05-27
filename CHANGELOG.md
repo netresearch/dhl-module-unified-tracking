@@ -16,6 +16,7 @@ Magento 2.4.7 compatibility release
 ### Removed
 
 - Support for PHP 7.x
+- Support for PHP 8.1
 
 ## 2.1.0
 

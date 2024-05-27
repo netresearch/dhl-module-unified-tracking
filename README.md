@@ -18,7 +18,7 @@ a carrier module or similar.
 
 ## Compatibility
 
-* Magento 2.4.7+
+* Magento 2.4.6+
 
 ## Installation Instructions
 
