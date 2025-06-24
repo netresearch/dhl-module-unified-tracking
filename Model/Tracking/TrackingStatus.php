@@ -98,7 +98,7 @@ class TrackingStatus extends Status implements TrackingStatusInterface
         string $trackSummary = '',
         string $status = '',
         string $shippedDate = '',
-        float $weight = null,
+        ?float $weight = null,
         string $deliveryLocation = '',
         string $deliveryDate = '',
         string $deliveryTime = '',
@@ -140,6 +140,7 @@ class TrackingStatus extends Status implements TrackingStatusInterface
      *
      * @return string
      */
+    #[\Override]
     public function getTrackingNumber(): string
     {
         return $this->trackingNumber;
@@ -150,6 +151,7 @@ class TrackingStatus extends Status implements TrackingStatusInterface
      *
      * @return string
      */
+    #[\Override]
     public function getTrackingUrl(): string
     {
         return $this->trackingUrl;
@@ -160,6 +162,7 @@ class TrackingStatus extends Status implements TrackingStatusInterface
      *
      * @return string
      */
+    #[\Override]
     public function getCarrierTitle(): string
     {
         return $this->carrierTitle;
@@ -170,6 +173,7 @@ class TrackingStatus extends Status implements TrackingStatusInterface
      *
      * @return string
      */
+    #[\Override]
     public function getTrackSummary(): string
     {
         return $this->trackSummary;
@@ -186,6 +190,7 @@ class TrackingStatus extends Status implements TrackingStatusInterface
      *
      * @return string
      */
+    #[\Override]
     public function getStatus(): string
     {
         return $this->status;
@@ -196,6 +201,7 @@ class TrackingStatus extends Status implements TrackingStatusInterface
      *
      * @return string
      */
+    #[\Override]
     public function getShippedDate(): string
     {
         return $this->shippedDate;
@@ -206,7 +212,8 @@ class TrackingStatus extends Status implements TrackingStatusInterface
      *
      * @return float|null
      */
-    public function getWeight(): float
+    #[\Override]
+    public function getWeight(): ?float
     {
         return $this->weight;
     }
@@ -216,6 +223,7 @@ class TrackingStatus extends Status implements TrackingStatusInterface
      *
      * @return string
      */
+    #[\Override]
     public function getDeliveryLocation(): string
     {
         return $this->deliveryLocation;
@@ -243,6 +251,7 @@ class TrackingStatus extends Status implements TrackingStatusInterface
      *
      * @return string
      */
+    #[\Override]
     public function getSignedBy(): string
     {
         return $this->signedBy;
@@ -253,6 +262,7 @@ class TrackingStatus extends Status implements TrackingStatusInterface
      *
      * @return TrackingEventInterface[]
      */
+    #[\Override]
     public function getProgressDetail(): array
     {
         return $this->progressDetail;

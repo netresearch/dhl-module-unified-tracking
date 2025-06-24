@@ -66,6 +66,7 @@ class TrackingEvent extends DataObject implements TrackingEventInterface
      *
      * @return string
      */
+    #[\Override]
     public function getDeliveryDate(): string
     {
         return $this->deliveryDate;
@@ -76,6 +77,7 @@ class TrackingEvent extends DataObject implements TrackingEventInterface
      *
      * @return string
      */
+    #[\Override]
     public function getDeliveryTime(): string
     {
         return $this->deliveryTime;
@@ -86,6 +88,7 @@ class TrackingEvent extends DataObject implements TrackingEventInterface
      *
      * @return string
      */
+    #[\Override]
     public function getDeliveryLocation(): string
     {
         return $this->deliveryLocation;
@@ -96,6 +99,7 @@ class TrackingEvent extends DataObject implements TrackingEventInterface
      *
      * @return string
      */
+    #[\Override]
     public function getActivity(): string
     {
         return $this->activity;

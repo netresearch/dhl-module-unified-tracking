@@ -50,6 +50,7 @@ class TrackingInfoProvider implements TrackingInfoProviderInterface
         $this->logger = $logger;
     }
 
+    #[\Override]
     public function getTrackingDetails(
         string $trackingId,
         string $carrierCode

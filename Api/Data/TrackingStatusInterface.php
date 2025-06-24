@@ -68,9 +68,9 @@ interface TrackingStatusInterface
     /**
      * Obtain the shipment weight.
      *
-     * @return float
+     * @return float|null
      */
-    public function getWeight(): float;
+    public function getWeight(): ?float;
 
     /**
      * Obtain the delivery location.

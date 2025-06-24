@@ -53,10 +53,9 @@ class GetTrackingDetailsTest extends TestCase
     /**
      * Prepare object manager, set up web service stub.
      */
+    #[\Override]
     protected function setUp(): void
     {
-        parent::setUp();
-
         $this->objectManager = Bootstrap::getObjectManager();
 
         $this->trackingService = $this->objectManager->create(TrackingServiceStub::class);
@@ -68,6 +67,7 @@ class GetTrackingDetailsTest extends TestCase
         );
 
         $this->objectManager->addSharedInstance($serviceFactoryMock, ServiceFactory::class);
+        $this->objectManager->addSharedInstance($serviceFactoryMock, 'Dhl\Sdk\UnifiedTracking\Service\ServiceFactory\Virtual');
     }
 
     /**
@@ -95,7 +95,7 @@ class GetTrackingDetailsTest extends TestCase
      * @return callable[][]
      * @throws \Exception
      */
-    public function exactMatchDataProvider(): array
+    public static function exactMatchDataProvider(): array
     {
         return [
             'api_returns_one_match' => [
@@ -121,7 +121,7 @@ class GetTrackingDetailsTest extends TestCase
      * @return callable[][]
      * @throws \Exception
      */
-    public function noExactMatchDataProvider(): array
+    public static function noExactMatchDataProvider(): array
     {
         return [
             'api_returns_one_mismatch' => [
@@ -148,9 +148,9 @@ class GetTrackingDetailsTest extends TestCase
      *
      * Assert that an exception is thrown.
      *
-     * @test
      * @throws TrackingException
      */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function trackNotFound()
     {
         $trackingNumber = '123456';
@@ -169,14 +169,14 @@ class GetTrackingDetailsTest extends TestCase
      *
      * Assert that fields of the web service response are available in the tracking provider result.
      *
-     * @test
-     * @dataProvider exactMatchDataProvider
      * @magentoDataFixture createTrackFixture
      *
      * @param \Closure $getTrack Accessor to track creating in fixture.
      * @param \Closure $getTrackResponses Accessor to tracking responses built for the track fixture.
      * @throws \Exception
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('exactMatchDataProvider')]
+    #[\PHPUnit\Framework\Attributes\Test]
     public function trackRequestSuccess(\Closure $getTrack, \Closure $getTrackResponses)
     {
         /** @var ShipmentTrackInterface|Track $track */
@@ -220,14 +220,14 @@ class GetTrackingDetailsTest extends TestCase
      *
      * Assert that an error message is available in the tracking provider result.
      *
-     * @test
-     * @dataProvider noExactMatchDataProvider
      * @magentoDataFixture createTrackFixture
      *
      * @param \Closure $getTrack
      * @param \Closure $getTrackResponses
      * @throws \Exception
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('noExactMatchDataProvider')]
+    #[\PHPUnit\Framework\Attributes\Test]
     public function trackRequestNoMatch(\Closure $getTrack, \Closure $getTrackResponses)
     {
         /** @var ShipmentTrackInterface|Track $track */
@@ -257,13 +257,12 @@ class GetTrackingDetailsTest extends TestCase
      *
      * Assert that an error message is available in the tracking provider result.
      *
-     * @test
-     * @dataProvider exactMatchDataProvider
      * @magentoDataFixture createTrackFixture
-     *
      * @param \Closure $getTrack
      * @throws \Exception
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('exactMatchDataProvider')]
+    #[\PHPUnit\Framework\Attributes\Test]
     public function trackRequestNoResult(\Closure $getTrack)
     {
         $errorMessage = 'Web service request failed.';

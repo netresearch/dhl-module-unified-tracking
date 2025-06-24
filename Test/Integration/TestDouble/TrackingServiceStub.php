@@ -28,12 +28,13 @@ class TrackingServiceStub implements TrackingServiceInterface
      */
     public $exception;
 
+    #[\Override]
     public function retrieveTrackingInformation(
         string $trackingNumber,
-        string $service = null,
-        string $requesterCountryCode = null,
-        string $originCountryCode = null,
-        string $recipientPostalCode = null,
+        ?string $service = null,
+        ?string $requesterCountryCode = null,
+        ?string $originCountryCode = null,
+        ?string $recipientPostalCode = null,
         string $language = 'en'
     ): array {
         if ($this->exception) {

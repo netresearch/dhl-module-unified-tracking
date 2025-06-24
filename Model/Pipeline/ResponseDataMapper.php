@@ -82,7 +82,7 @@ class ResponseDataMapper
      * @param PersonInterface|null $person
      * @return string[]
      */
-    private function mapPerson(PersonInterface $person = null): array
+    private function mapPerson(?PersonInterface $person = null): array
     {
         if (!$person) {
             return [];
@@ -99,7 +99,7 @@ class ResponseDataMapper
      * @param AddressInterface|null $address
      * @return string[]
      */
-    private function mapAddress(AddressInterface $address = null): array
+    private function mapAddress(?AddressInterface $address = null): array
     {
         if (!$address) {
             return [];

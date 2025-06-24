@@ -50,6 +50,7 @@ class TrackingError extends Error implements TrackingErrorInterface
      *
      * @return string
      */
+    #[\Override]
     public function getTrackingNumber(): string
     {
         return $this->trackingNumber;
@@ -60,6 +61,7 @@ class TrackingError extends Error implements TrackingErrorInterface
      *
      * @return Phrase
      */
+    #[\Override]
     public function getErrorMessage(): Phrase
     {
         return $this->errorMessage;

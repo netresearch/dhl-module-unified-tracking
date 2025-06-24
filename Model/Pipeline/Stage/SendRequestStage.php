@@ -109,6 +109,7 @@ class SendRequestStage implements RequestTracksStageInterface
      *
      * @return TrackRequestInterface[]
      */
+    #[\Override]
     public function execute(array $requests, ArtifactsContainerInterface $artifactsContainer): array
     {
         $sortedCarrierTrackingRequests = [];
@@ -131,7 +132,7 @@ class SendRequestStage implements RequestTracksStageInterface
                     $carrierConfig = $this->getCarrierConfigurationByCode($carrierCode);
                     $logger = $carrierConfig->getLogger();
                     $serviceName = $carrierConfig->getServiceName();
-                } catch (\InvalidArgumentException $e) {
+                } catch (\InvalidArgumentException) {
                     $logger = $this->logger;
                     $serviceName = null;
                 }

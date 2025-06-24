@@ -12,7 +12,8 @@
     <preference for="Dhl\UnifiedTracking\Api\Data\TrackingStatusInterface" type="Dhl\UnifiedTracking\Model\Tracking\TrackingStatus"/>
 
     <!-- # sdk preferences -->
-    <preference for="Dhl\Sdk\UnifiedTracking\Api\ServiceFactoryInterface" type="Dhl\Sdk\UnifiedTracking\Service\ServiceFactory"/>
+    <preference for="Dhl\Sdk\UnifiedTracking\Api\ServiceFactoryInterface" type="Dhl\Sdk\UnifiedTracking\Service\ServiceFactory\Virtual"/>
+    <virtualType name="Dhl\Sdk\UnifiedTracking\Service\ServiceFactory\Virtual" type="Dhl\Sdk\UnifiedTracking\Service\ServiceFactory" />
 
     <!-- # virtual types -->
     <virtualType name="Dhl\UnifiedTracking\Model\Pipeline\RequestTracksPipeline\Virtual" type="Netresearch\ShippingCore\Model\Pipeline\Track\RequestTracksPipeline">

@@ -29,18 +29,17 @@ class ModuleConfigTest extends TestCase
     /**
      * Init object manager and test subject
      */
+    #[\Override]
     protected function setUp(): void
     {
-        parent::setUp();
-
         $this->objectManager = ObjectManager::getInstance();
         $this->config = $this->objectManager->create(ModuleConfig::class);
     }
 
     /**
-     * @test
      * @magentoConfigFixture default/dhlshippingsolutions/tracking/consumer_key foo
      */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function getConsumerKey()
     {
         $consumerKey = $this->config->getConsumerKey();
@@ -48,10 +47,10 @@ class ModuleConfigTest extends TestCase
     }
 
     /**
-     * @test
      * @magentoConfigFixture current_store shipping/origin/country_id US
      * @magentoConfigFixture default_store shipping/origin/country_id DE
      */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function getShippingOriginCountry()
     {
         $countryCode = $this->config->getShippingOriginCountry('admin');
