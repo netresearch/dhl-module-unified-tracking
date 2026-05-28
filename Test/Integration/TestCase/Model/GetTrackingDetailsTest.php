@@ -59,7 +59,7 @@ class GetTrackingDetailsTest extends TestCase
         $this->objectManager = Bootstrap::getObjectManager();
 
         $this->trackingService = $this->objectManager->create(TrackingServiceStub::class);
-        $serviceFactoryMock = $this->createConfiguredMock(
+        $serviceFactoryMock = $this->createConfiguredStub(
             ServiceFactory::class,
             [
                 'createTrackingService' => $this->trackingService
@@ -203,7 +203,7 @@ class GetTrackingDetailsTest extends TestCase
 
         $progressDetail = $trackingDetails->getProgressDetail();
         self::assertTrue(\is_array($progressDetail));
-        self::assertContainsOnly(TrackingEventInterface::class, $progressDetail);
+        self::assertContainsOnlyInstancesOf(TrackingEventInterface::class, $progressDetail);
         self::assertCount(count($trackResponse->getStatusEvents()), $progressDetail);
 
         foreach ($progressDetail as $idx => $trackingEvent) {
@@ -263,7 +263,7 @@ class GetTrackingDetailsTest extends TestCase
      */
     #[\PHPUnit\Framework\Attributes\DataProvider('exactMatchDataProvider')]
     #[\PHPUnit\Framework\Attributes\Test]
-    public function trackRequestNoResult(\Closure $getTrack)
+    public function trackRequestNoResult(\Closure $getTrack, \Closure $getTrackResponses)
     {
         $errorMessage = 'Web service request failed.';
 
